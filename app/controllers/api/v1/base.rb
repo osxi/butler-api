@@ -3,6 +3,7 @@
       class Base < Grape::API
         mount API::V1::Projects
         mount API::V1::Staff
+        mount API::V1::Tasks
 
         add_swagger_documentation(
           api_version: 'v1',
