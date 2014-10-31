@@ -13,8 +13,7 @@ module API
           api_url    = permitted_params[:api_url]
           auth_token = permitted_params[:auth_token]
 
-          all_projects = FreshBooksApi::Projects.new(api_url, auth_token).all
-          all_projects
+          FreshBooksApi::Projects.new(api_url, auth_token).all
         end
       end
     end
