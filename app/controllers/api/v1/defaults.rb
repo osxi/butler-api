@@ -18,6 +18,10 @@ module API
             Rails.logger
           end
         end
+
+        rescue_from NoMethodError do |e|
+          error_response(message: e.message, status: 500)
+        end
       end
     end
   end
