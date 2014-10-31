@@ -42,6 +42,7 @@ db/*.sqlite3
 /public/stylesheets/compiled
 /public/system/*
 /spec/tmp/*
+/spec/fixtures/vcr_cassettes
 /cache
 /capybara*
 /capybara-*.html
