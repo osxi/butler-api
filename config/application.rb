@@ -34,5 +34,7 @@ module ButlerApi
           methods: [:get, :post, :put, :delete, :options, :patch]
       end
     end
+
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

@@ -40,6 +40,8 @@ gem "unicorn"
 gem "figaro"
 gem "pg"
 gem "jsonapi-resources"
+gem "ruby-freshbooks"
+
 group :production, :staging do
   gem "rails_12factor"
   gem "airbrake"
