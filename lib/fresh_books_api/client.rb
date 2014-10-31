@@ -1,4 +1,6 @@
 module FreshBooksApi
+  class ApiError < StandardError; end;
+
   class Client
     attr_reader :api_url, :auth_token
 

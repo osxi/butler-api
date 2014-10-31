@@ -4,6 +4,7 @@
         mount API::V1::Projects
         mount API::V1::Staff
         mount API::V1::Tasks
+        mount API::V1::TimeEntries
 
         add_swagger_documentation(
           api_version: 'v1',
