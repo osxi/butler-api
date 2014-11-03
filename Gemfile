@@ -41,6 +41,7 @@ gem "figaro"
 gem "pg"
 gem "jsonapi-resources"
 gem "ruby-freshbooks"
+gem "ruby-trello"
 
 group :production, :staging do
   gem "rails_12factor"
@@ -66,6 +67,7 @@ group :development, :test do
   gem "factory_girl_rails"
   gem "byebug"
   gem "rspec-rails"
+  gem "rspec-its"
   gem "database_cleaner"
   gem "better_errors"
   gem "binding_of_caller"

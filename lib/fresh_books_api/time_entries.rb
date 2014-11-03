@@ -5,7 +5,7 @@ module FreshBooksApi
       res = client.time_entry.create(time_entry: attributes.to_h)
 
       if res['error']
-        raise FreshBooksApi::ApiError.new("#{res['code']}: #{res['error']}")
+        fail FreshBooksApi::ApiError, "#{res['code']}: #{res['error']}"
       end
 
       res

@@ -11,9 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141031211443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "time_entries", force: true do |t|
+    t.integer  "fb_id"
+    t.integer  "fb_project_id"
+    t.integer  "fb_task_id"
+    t.integer  "fb_staff_id"
+    t.text     "notes"
+    t.float    "hours"
+    t.date     "date"
+    t.string   "trello_card_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
