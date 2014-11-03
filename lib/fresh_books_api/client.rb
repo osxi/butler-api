@@ -36,5 +36,12 @@ module FreshBooksApi
     def client
       @client ||= FreshBooks::Client.new @api_url, @auth_token
     end
+
+    def respond(res)
+      if res['error']
+        fail FreshBooksApi::ApiError, "#{res['code']}: #{res['error']}"
+      end
+      res
+    end
   end
 end
