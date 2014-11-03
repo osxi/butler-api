@@ -5,7 +5,8 @@ module FreshBooksApi
       respond client.time_entry.create(time_entry: attributes.to_h)
     end
 
-      res
+    def get(id)
+      respond client.time_entry.get(time_entry_id: id)
     end
   end
 end
