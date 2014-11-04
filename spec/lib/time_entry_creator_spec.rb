@@ -63,7 +63,7 @@ describe TimeEntryCreator do
 
       it 'computes the sum and sets the name to that' do
         spy = spy('creator.trello_client')
-        creator.instance_variable_set("@trello_client", spy)
+        creator.instance_variable_set('@trello_client', spy)
 
         creator.create
 
