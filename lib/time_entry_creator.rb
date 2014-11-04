@@ -1,12 +1,19 @@
 class TimeEntryCreator
-  attr_accessor :api_url, :auth_token, :trello_key, :trello_token, :time_entry
+  attr_reader :api_url, :auth_token, :trello_key, :trello_token, :time_entry,
+              :fb_client, :trello_client
 
-  def initialize(api_url:, auth_token:, trello_key:nil, trello_token:nil, time_entry:)
+  def initialize(api_url:, auth_token:, trello_key:nil, trello_token:nil,
+                 time_entry:)
     @api_url      = api_url
     @auth_token   = auth_token
     @trello_key   = trello_key
     @trello_token = trello_token
     @time_entry   = time_entry
+    @fb_client    = FreshBooksApi::TimeEntries.new(api_url, auth_token)
+
+    return unless trello_key && trello_token
+
+    @trello_client = TrelloApi.new(trello_key, trello_token)
   end
 
   def create
@@ -19,9 +26,7 @@ class TimeEntryCreator
   private
 
   def create_on_freshbooks
-    fb_client = FreshBooksApi::TimeEntries.new(api_url, auth_token)
-
-    fb_entry           = fb_client.create(time_entry)
+    fb_entry           = fb_client.create(time_entry.except(:card_id))
     time_entry[:fb_id] = fb_entry['time_entry_id']
   end
 
@@ -35,12 +40,28 @@ class TimeEntryCreator
       time_entry[('fb_' + key.to_s).to_sym] = time_entry[key]
       time_entry.delete key
     end
+
+    time_entry[:trello_card_id] = time_entry[:card_id]
+    time_entry.delete :card_id
   end
 
   def update_trello_card
+    return unless time_entry[:trello_card_id] && trello_client
+
     update_stored_entries
+
+    total_hours = local_entries_for_card.sum(:hours)
+
+    trello_client.update_card_hours(time_entry[:trello_card_id], total_hours)
   end
 
   def update_stored_entries
+    local_entries_for_card.each do |entry|
+      entry.update_from_freshbooks(fb_client)
+    end
+  end
+
+  def local_entries_for_card
+    TimeEntry.where(trello_card_id: time_entry[:trello_card_id])
   end
 end

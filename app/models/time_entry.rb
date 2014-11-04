@@ -1,5 +1,7 @@
 class TimeEntry < ActiveRecord::Base
   def update_from_freshbooks(client)
+    return unless fb_id.present?
+
     fb_entry = client.get(fb_id)['time_entry']
 
     %w(staff_id project_id staff_id).each do |key|

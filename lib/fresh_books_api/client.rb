@@ -2,12 +2,12 @@ module FreshBooksApi
   class ApiError < StandardError; end
 
   class Client
-    attr_reader :api_url, :auth_token
+    attr_reader :api_url, :auth_token, :client
 
     def initialize(api_url, auth_token)
-      @api_url = api_url
+      @api_url    = api_url
       @auth_token = auth_token
-      client
+      @client     = FreshBooks::Client.new @api_url, @auth_token
     end
 
     def list_get_all(method, plural_key, singular_key)
@@ -31,10 +31,6 @@ module FreshBooksApi
       end
 
       results
-    end
-
-    def client
-      @client ||= FreshBooks::Client.new @api_url, @auth_token
     end
 
     def respond(res)
