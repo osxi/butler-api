@@ -10,17 +10,19 @@ module FreshBooksApi
       @client     = FreshBooks::Client.new @api_url, @auth_token
     end
 
-    def list_get_all(method, plural_key, singular_key)
+    def list_get_all(method, plural_key, singular_key, options = {})
       plural_key   = plural_key.to_s
       singular_key = singular_key.to_s
 
-      all_pages(method, plural_key, singular_key).flatten
+      all_pages(method, plural_key, singular_key, options).flatten
     end
 
     private
 
-    def all_pages(method, plural_key, singular_key)
-      list            = client.send(method).list[plural_key]
+    def all_pages(method, plural_key, singular_key, options)
+      list            = client.send(method).list(options)[plural_key]
+      return [] unless list && list[singular_key]
+
       results         = [list[singular_key]]
       number_of_pages = list['pages'].to_i
 
