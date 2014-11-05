@@ -1,6 +1,6 @@
 namespace :freshbooks do
   desc "import time entries, date format [2014-10-12,2014-10-13]"
-  task :import_time_entries, [:from_day, :to_day] do |t, args|
+  task :import_time_entries, [:from_day, :to_day] => [:environment] do |t, args|
 
     from = (args[:from_day] && args[:from_day].to_date) || nil
     to   = (args[:to_day]   && args[:to_day].to_date)   || nil
