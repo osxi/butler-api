@@ -1,6 +1,5 @@
 module Trello
   class CardParser < Struct.new(:name)
-    SPLIT_HOURS_REGEX = /\(([\w]{8})\)/
     SPLIT_HOURS_REGEX = /(.*\[)([\d\.]+)(\].*)\s?\z/
 
     def update_hours_in_name(total_hours)
