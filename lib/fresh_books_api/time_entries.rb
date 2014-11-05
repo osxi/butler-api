@@ -57,7 +57,7 @@ module FreshBooksApi
     end
 
     def get_trello_card_id(notes)
-      card_id = TrelloCardParser.new(notes).card_id
+      card_id = FreshBooksApi::TimeEntryParser.new(notes).card_id
 
       return false if card_id == :no_card_id_found
 

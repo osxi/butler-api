@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 describe TrelloCardParser do
-  context '#card_id' do
-    context 'with card id' do
-      subject { TrelloCardParser.new('Hello (GyMwvpq9)') }
+  context '#update_hours_in_name' do
+    context 'with hours' do
+      subject { TrelloCardParser.new('Hello [0.5]').update_hours_in_name(1.0) }
 
-      its(:card_id) { should eql 'GyMwvpq9' }
+      it { is_expected.to eql 'Hello [1.0]' }
     end
 
-    context 'without card id' do
-      subject { TrelloCardParser.new('Hello') }
+    context 'without hours' do
+      subject { TrelloCardParser.new('Hello').update_hours_in_name(1.0) }
 
-      its(:card_id) { should eql :no_card_id_found }
+      it { is_expected.to eql 'Hello [1.0]' }
     end
   end
 end

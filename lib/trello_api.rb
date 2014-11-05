@@ -41,16 +41,6 @@ class TrelloApi
   end
 
   def update_hours_in_name(name, total_hours)
-    split_regex = /(.*\[)([\d\.]+)(\].*)\s?$/
-
-    split_name = name.to_s.split(split_regex)
-
-    if split_name && split_name.length == 4
-      split_name.shift
-      split_name[1] = total_hours.round(2)
-      split_name.join
-    else
-      "#{name} [#{total_hours.round(2)}]"
-    end
+    TrelloCardParser.new(name).update_hours_in_name(total_hours)
   end
 end
