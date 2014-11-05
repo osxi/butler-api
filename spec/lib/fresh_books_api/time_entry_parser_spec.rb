@@ -13,6 +13,12 @@ describe FreshBooksApi::TimeEntryParser do
 
       its(:card_id) { should eql :no_card_id_found }
     end
+
+    context 'without card id - nil (bugfix)' do
+      subject { FreshBooksApi::TimeEntryParser.new(nil) }
+
+      its(:card_id) { should eql :no_card_id_found }
+    end
   end
 
   context '#update_hours_in_name' do

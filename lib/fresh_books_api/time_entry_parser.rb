@@ -3,7 +3,7 @@ module FreshBooksApi
     CARD_ID_REGEX = /\(trello:([\w]{8})\)/
 
     def card_id
-      matches = notes.match(CARD_ID_REGEX)
+      matches = notes.to_s.match(CARD_ID_REGEX)
 
       return matches[1] if matches && matches.length > 1
 
