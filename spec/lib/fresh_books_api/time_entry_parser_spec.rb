@@ -3,7 +3,7 @@ require 'rails_helper'
 describe FreshBooksApi::TimeEntryParser do
   context '#card_id' do
     context 'with card id' do
-      subject { FreshBooksApi::TimeEntryParser.new('Hello (GyMwvpq9)') }
+      subject { FreshBooksApi::TimeEntryParser.new('Hello (trello:GyMwvpq9)') }
 
       its(:card_id) { should eql 'GyMwvpq9' }
     end
@@ -17,7 +17,7 @@ describe FreshBooksApi::TimeEntryParser do
 
   context '#update_hours_in_name' do
     context 'with hours' do
-      subject { FreshBooksApi::TimeEntryParser.new('Hello (GyMwvpq9)') }
+      subject { FreshBooksApi::TimeEntryParser.new('Hello (trello:GyMwvpq9)') }
 
       its(:card_id) { should eql 'GyMwvpq9' }
     end
