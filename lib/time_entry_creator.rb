@@ -48,6 +48,9 @@ class TimeEntryCreator
   def update_trello_card
     return unless time_entry[:trello_card_id] && trello_client
 
+    # TODO: This method would be better within the CardActualsUpdater. We'd have
+    # to pass in the fb_client instance which seems weird though. Like we're
+    # breaking SRP
     update_stored_entries
 
     updater = Trello::CardActualsUpdater.new(trello_client)
@@ -55,12 +58,12 @@ class TimeEntryCreator
   end
 
   def update_stored_entries
-    local_entries_for_card.each do |entry|
+    records_for_card.each do |entry|
       entry.update_from_freshbooks(fb_client)
     end
   end
 
-  def local_entries_for_card
+  def records_for_card
     TimeEntry.where(trello_card_id: time_entry[:trello_card_id])
   end
 end
