@@ -13,7 +13,10 @@ module FreshBooksApi
       list_get_all(:time_entry, :time_entries, :time_entry, options)
     end
 
-    def import_all(from:DateTime.now - 1.days, to:DateTime.now)
+    def import_all(from:nil, to:nil)
+      from = DateTime.now - 1.days unless from.present?
+      to   = DateTime.now unless to.present?
+
       time_format = '%Y-%m-%d'
       entries = all(date_from: from.strftime(time_format),
                     date_to:   to.strftime(time_format))
