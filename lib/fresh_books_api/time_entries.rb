@@ -47,7 +47,7 @@ module FreshBooksApi
       time_entry.hours          = entry['hours']
       time_entry.date           = entry['date']
       time_entry.notes          = entry['notes']
-      time_entry.trello_card_id = trello_card_id if trello_card_id
+      time_entry.trello_card_id = trello_card_id
       time_entry
     end
 
@@ -62,7 +62,7 @@ module FreshBooksApi
     def get_trello_card_id(notes)
       card_id = FreshBooksApi::TimeEntryParser.new(notes).card_id
 
-      return false if card_id == :no_card_id_found
+      return nil if card_id == :no_card_id_found
 
       card_id
     end
