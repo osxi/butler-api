@@ -3,9 +3,17 @@ require 'rails_helper'
 describe FreshBooksApi::TimeEntryParser do
   context '#card_id' do
     context 'with card id' do
-      subject { FreshBooksApi::TimeEntryParser.new('Hello (trello:GyMwvpq9)') }
+      context 'expected' do
+        subject { FreshBooksApi::TimeEntryParser.new('Hello (trello:GyMwvpq9)') }
 
-      its(:card_id) { should eql 'GyMwvpq9' }
+        its(:card_id) { should eql 'GyMwvpq9' }
+      end
+
+      context 'extra whitespace' do
+        subject { FreshBooksApi::TimeEntryParser.new(' Hello (trello:GyMwvpq9) ') }
+
+        its(:card_id) { should eql 'GyMwvpq9' }
+      end
     end
 
     context 'without card id' do
