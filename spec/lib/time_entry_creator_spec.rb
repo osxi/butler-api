@@ -55,20 +55,5 @@ describe TimeEntryCreator do
 
       creator.create
     end
-
-    context 'sums total hours', :vcr do
-      before do
-        TimeEntry.create(trello_card_id: '28Pjr2dK', hours: 0.5)
-      end
-
-      it 'computes the sum and sets the name to that' do
-        spy = spy('creator.trello_client')
-        creator.instance_variable_set('@trello_client', spy)
-
-        creator.create
-
-        expect(spy).to have_received(:update_card_hours).with('28Pjr2dK', 1.0)
-      end
-    end
   end
 end

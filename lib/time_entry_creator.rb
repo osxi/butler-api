@@ -50,9 +50,8 @@ class TimeEntryCreator
 
     update_stored_entries
 
-    total_hours = local_entries_for_card.sum(:hours)
-
-    trello_client.update_card_hours(time_entry[:trello_card_id], total_hours)
+    updater = Trello::CardActualsUpdater.new(trello_client)
+    updater.update_card(time_entry[:trello_card_id])
   end
 
   def update_stored_entries
