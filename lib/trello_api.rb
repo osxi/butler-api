@@ -41,6 +41,6 @@ class TrelloApi
   end
 
   def update_hours_in_name(name, total_hours)
-    TrelloCardParser.new(name).update_hours_in_name(total_hours)
+    Trello::CardParser.new(name).update_hours_in_name(total_hours)
   end
 end
