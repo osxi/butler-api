@@ -27,8 +27,8 @@ module FreshBooksApi
       number_of_pages = list['pages'].to_i
 
       (2..number_of_pages).each do |page|
-        options = { page: page }
-        list    = client.send(method).list(options)
+        page_options = { page: page }
+        list         = client.send(method).list(options.merge(page_options))
         results << list[plural_key][singular_key]
       end
 
