@@ -1,6 +1,6 @@
 module FreshBooksApi
   class TimeEntryParser < Struct.new(:notes)
-    CARD_ID_REGEX = /\(trello:([\w]{8})\)/
+    CARD_ID_REGEX = /\(\s?trello:\s?([\w]{8})\s?\)/
 
     def card_id
       matches = notes.to_s.match(CARD_ID_REGEX)

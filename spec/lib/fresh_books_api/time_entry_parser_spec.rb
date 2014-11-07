@@ -14,6 +14,18 @@ describe FreshBooksApi::TimeEntryParser do
 
         its(:card_id) { should eql 'GyMwvpq9' }
       end
+
+      context 'with space between trello and card' do
+        subject { FreshBooksApi::TimeEntryParser.new('Hello (trello: GyMwvpq9)') }
+
+        its(:card_id) { should eql 'GyMwvpq9' }
+      end
+
+      context 'with space between parens' do
+        subject { FreshBooksApi::TimeEntryParser.new('Hello ( trello: GyMwvpq9 )') }
+
+        its(:card_id) { should eql 'GyMwvpq9' }
+      end
     end
 
     context 'without card id' do
