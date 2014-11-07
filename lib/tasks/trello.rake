@@ -6,7 +6,7 @@ namespace :trello do
 
     card_ids = TimeEntry.where.not(trello_card_id: nil)
                         .where('date >= ? AND date <= ?', from, to)
-                        .pluck(:trello_card_id)
+                        .pluck(:trello_card_id).uniq
 
     trello_client = TrelloApi.new(ENV['TRELLO_KEY'], ENV['TRELLO_TOKEN'])
     card_updater  = Trello::CardActualsUpdater.new(trello_client)
