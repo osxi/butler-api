@@ -34,7 +34,7 @@ module FreshBooksApi
     private
 
     def find_and_update_entry(fb_entry, trello_card_id)
-      query      = build_find_by(fb_entry, trello_card_id)
+      query      = { fb_id: fb_entry['time_entry_id'] }
       time_entry = TimeEntry.find_or_initialize_by(query)
 
       update_properties(time_entry, fb_entry, trello_card_id)
@@ -49,14 +49,6 @@ module FreshBooksApi
       time_entry.notes          = entry['notes']
       time_entry.trello_card_id = trello_card_id
       time_entry
-    end
-
-    def build_find_by(entry, trello_card_id)
-      query          = { fb_id: entry['time_entry_id'] }
-
-      query[:trello_card_id] = trello_card_id if trello_card_id.present?
-
-      query
     end
 
     def get_trello_card_id(notes)
