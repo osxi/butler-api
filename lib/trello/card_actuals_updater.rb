@@ -4,6 +4,7 @@ module Trello
       hours = records_for_card(card_id).sum(:hours)
 
       trello_client.update_card_hours(card_id, hours)
+      comment_total_hours(card_id, hours)
     end
 
     def update_cards(*card_ids)
@@ -13,6 +14,11 @@ module Trello
     end
 
     private
+
+    def comment_total_hours(card_id, hours)
+      comment = "Actual hours changed to #{hours}"
+      trello_client.create_comment(card_id, comment)
+    end
 
     def records_for_card(card_id)
       TimeEntry.where(trello_card_id: card_id)
