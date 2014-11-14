@@ -14,10 +14,18 @@ describe TrelloApi do
     end
   end
 
-  context '#update_card_hours' do
-    it 'updates trello card name', :vcr do
+  context '#update_card_hours', :vcr do
+    it 'updates trello card name' do
       res = client.update_card_hours('z67DFiHm', 2.0)
       expect(res).to eql 'Test hours used in test [2.0]'
+    end
+
+    it 'doesn\'t set name when it\'s the same' do
+      expect(client).to_not receive(:set_card_name)
+
+      res = client.update_card_hours('SGMaMQ4D', 0.5)
+
+      expect(res).to eql 'Test update card name same hours [0.5]'
     end
   end
 
