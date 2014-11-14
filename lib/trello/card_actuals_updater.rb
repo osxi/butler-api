@@ -3,8 +3,8 @@ module Trello
     def update_card(card_id)
       hours = records_for_card(card_id).sum(:hours)
 
-      trello_client.update_card_hours(card_id, hours)
-      comment_total_hours(card_id, hours)
+      did_update = trello_client.update_card_hours(card_id, hours)
+      comment_total_hours(card_id, hours) if did_update
     end
 
     def update_cards(*card_ids)

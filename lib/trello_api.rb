@@ -14,7 +14,7 @@ class TrelloApi
     name_with_updated_hours = update_hours_in_name(name, total_hours)
 
     if name == name_with_updated_hours
-      name
+      false
     else
       set_card_name(card_id, name_with_updated_hours)
     end

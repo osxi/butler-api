@@ -18,7 +18,7 @@ describe Trello::CardActualsUpdater do
       expect(spy).to have_received(:update_card_hours).with('28Pjr2dK', 0.5)
     end
 
-    it 'logs a comment to trello' do
+    it 'logs a comment to trello when updates card hours' do
       spy = spy('subject.trello_client')
       subject.trello_client = spy
 
@@ -27,6 +27,16 @@ describe Trello::CardActualsUpdater do
       subject.update_card('28Pjr2dK')
 
       expect(spy).to have_received(:create_comment).with('28Pjr2dK',  'Actual hours changed to 0.5')
+    end
+
+    it 'doesn\'t log a comment to trello when not updated' do
+      spy = spy('subject.trello_client')
+      subject.trello_client = spy
+
+      expect(spy).to receive(:update_card_hours).and_return(false)
+      expect(subject).to_not receive(:comment_total_hours)
+
+      subject.update_card('28Pjr2dK')
     end
   end
 
