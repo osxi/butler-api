@@ -26,6 +26,11 @@ class TrelloApi
     name
   end
 
+  def create_comment(card_id, comment)
+    client.post "#{card_path(card_id)}/actions/comments", text: comment
+    comment
+  end
+
   private
 
   def json_value(res)
@@ -37,7 +42,11 @@ class TrelloApi
   end
 
   def card_name_path(id)
-    "/cards/#{id}/name"
+    "#{card_path(id)}/name"
+  end
+
+  def card_path(id)
+    "/cards/#{id}"
   end
 
   def update_hours_in_name(name, total_hours)

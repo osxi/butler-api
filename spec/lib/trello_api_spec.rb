@@ -20,4 +20,11 @@ describe TrelloApi do
       expect(res).to eql 'Test hours used in test [2.0]'
     end
   end
+
+  context '#create_comment', :vcr do
+    it 'creates a comment on a card' do
+      res = client.create_comment('Iau2e1Uc', 'a new comment')
+      expect(res).to eql 'a new comment'
+    end
+  end
 end
