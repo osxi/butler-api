@@ -20,7 +20,7 @@ describe 'TimeEntries' do
     end
 
     describe 'with card_id', :vcr do
-      it 'create on freshbooks and updates on trello', :vcr do
+      it 'create on freshbooks and updates on trello' do
         post '/api/v1/time_entries',
              api_url:      ENV['FB_API_URL'],
              auth_token:   ENV['FB_AUTH_TOKEN'],
@@ -33,7 +33,7 @@ describe 'TimeEntries' do
                hours: 0.5,
                notes: 'Did something cool',
                date: Date.iso8601('2014-10-31T20:47:38.213Z'),
-               card_id: 'FzLuqJAu'
+               card_id: '8LslByi8'
              }
 
         expect(response).to be_success

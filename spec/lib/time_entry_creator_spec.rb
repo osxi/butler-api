@@ -44,7 +44,7 @@ describe TimeEntryCreator do
         hours: 0.5,
         notes: 'Did something cool',
         date: Date.iso8601('2014-10-31T20:47:38.213Z'),
-        card_id: '28Pjr2dK'
+        card_id: 'ARcjkdiv'
       }
       )
     end

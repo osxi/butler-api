@@ -9,10 +9,9 @@ describe TimeEntry, type: :model do
     let(:client) { FreshBooksApi::TimeEntries.new(api_url, auth_token) }
     let(:time_entry) do
       TimeEntry.create(
-        trello_card_id:  '28Pjr2dK',
-        notes:           'Incorrect',
-        fb_id:           '70926',
-        hours:           2.3
+        notes:  'Incorrect',
+        fb_id:  '70926',
+        hours:  2.3
       )
     end
 

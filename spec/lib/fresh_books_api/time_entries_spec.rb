@@ -7,7 +7,10 @@ describe FreshBooksApi::TimeEntries do
   end
 
   context '#import', :vcr do
-    subject { client.import_all }
+    let(:from) { Date.iso8601('2014-11-04T00:00:00.213Z') }
+    let(:to)   { Date.iso8601('2014-11-04T23:59:59.213Z') }
+
+    subject { client.import_all(from: from, to: to) }
 
     it 'creates new records' do
       expect(TimeEntry.count).to eql 0
