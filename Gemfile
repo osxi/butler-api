@@ -42,10 +42,10 @@ gem "pg"
 gem "jsonapi-resources"
 gem "ruby-freshbooks"
 gem "ruby-trello"
+gem "airbrake"
 
 group :production, :staging do
   gem "rails_12factor"
-  gem "airbrake"
   gem "hirefire-resource"
 end
 
