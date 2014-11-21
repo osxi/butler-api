@@ -5,9 +5,9 @@
     <th>Name</th>
     <th>Hours Logged<th>
   </tr>
-  <% @time_entries.each do |employee, time_entries| %>
+  <% @time_entries.each do |user, time_entries| %>
     <tr>
-      <td><%= employee.name %></td>
+      <td><%= user.name %></td>
       <td><%= time_entries.map(&:hours).inject(:+).round(2) %></td>
     </tr>
   <% end %>

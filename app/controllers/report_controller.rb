@@ -6,7 +6,7 @@ class ReportController < ApplicationController
       @time_entries = @team
                       .time_entries
                       .where(date: get_date)
-                      .group_by(&:employee)
+                      .group_by(&:user)
     else
       @time_entries = []
     end
@@ -14,7 +14,7 @@ class ReportController < ApplicationController
 
   def user
     fb_staff_id   = params[:fb_staff_id]
-    @employee     = Employee.find_by(fb_staff_id: fb_staff_id)
+    @user         = User.find_by(fb_staff_id: fb_staff_id)
     @time_entries = TimeEntry.where(fb_staff_id: fb_staff_id,
                                     date: get_date)
     @total_hours  = @time_entries.map(&:hours).inject(:+)

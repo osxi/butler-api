@@ -6,9 +6,9 @@ class CreateTeams < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :teams_employees do |t|
+    create_table :teams_users do |t|
       t.belongs_to :team
-      t.belongs_to :employee
+      t.belongs_to :user
       t.timestamps
     end
   end

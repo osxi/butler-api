@@ -1,6 +1,6 @@
-class CreateEmployees < ActiveRecord::Migration
+class CreateUsers < ActiveRecord::Migration
   def change
-    create_table :employees do |t|
+    create_table :users do |t|
       t.string  :first_name
       t.string  :last_name
       t.string  :email
@@ -10,8 +10,8 @@ class CreateEmployees < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :employees_teams do |t|
-      t.belongs_to :employee
+    create_table :users_teams do |t|
+      t.belongs_to :user
       t.belongs_to :team
       t.timestamps
     end

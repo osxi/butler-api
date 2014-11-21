@@ -8,12 +8,12 @@ module FreshBooksApi
       all_staff = all
 
       all_staff.each do |staff|
-        employee = Employee.find_or_create_by(fb_staff_id: staff['staff_id'])
-        employee.first_name ||= staff['first_name']
-        employee.last_name  ||= staff['last_name']
-        employee.email      ||= staff['email']
+        user              = User.find_or_create_by(fb_staff_id: staff['staff_id'])
+        user.first_name ||= staff['first_name']
+        user.last_name  ||= staff['last_name']
+        user.email      ||= staff['email']
 
-        employee.save! if employee.changed?
+        user.save! if user.changed?
       end
     end
   end

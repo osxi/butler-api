@@ -66,7 +66,7 @@ module FreshBooksApi
       time_entry.name           = get_freshbooks_staff_name(entry['staff_id'])
       time_entry.project_name   = get_freshbooks_project_name(entry['project_id'])
       time_entry.task_name      = get_freshbooks_task_name(entry['task_id'])
-      time_entry.employee       = Employee.find_by(fb_staff_id: entry['staff_id'])
+      time_entry.user           = User.find_by(fb_staff_id: entry['staff_id'])
       time_entry
     end
 
