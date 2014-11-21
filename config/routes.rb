@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'report/daily'
+  get 'report/user'
+
   mount GrapeSwaggerRails::Engine, at: '/docs'
   mount API::Base, at: '/api'
   # The priority is based upon order of creation: first created -> highest priority.
