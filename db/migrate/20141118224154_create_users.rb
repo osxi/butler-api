@@ -6,13 +6,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :email
       t.integer :fb_staff_id
       t.string  :trello_username
+      t.integer :team_id
 
-      t.timestamps
-    end
-
-    create_table :users_teams do |t|
-      t.belongs_to :user
-      t.belongs_to :team
       t.timestamps
     end
   end

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_and_belongs_to_many :teams
+  belongs_to :team
   has_many :time_entries
 
   def name
