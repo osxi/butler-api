@@ -1,4 +1,6 @@
 class TimeEntry < ActiveRecord::Base
+  belongs_to :employee
+  has_many :teams, through: :employee
   def update_from_freshbooks(client)
     return unless fb_id.present?
 
