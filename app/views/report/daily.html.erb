@@ -8,10 +8,14 @@
   <% @time_entries.each do |user, time_entries| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= time_entries.map(&:hours).inject(:+).round(2) %></td>
+      <td><%= time_entries.map(&:hours).inject(0, :+).try(:round, 2) %></td>
     </tr>
   <% end %>
   <% if @time_entries.blank? %>
     <tr><td colspan='8'><strong>No records found.</strong></td></tr>
   <% end %>
+  <tr>
+    <td>Total:</td>
+    <td><%= @total_hours %></td>
+  </tr>
 </table>
