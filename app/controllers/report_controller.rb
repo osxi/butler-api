@@ -6,7 +6,7 @@ class ReportController < ApplicationController
                     .where(date: get_date)
                     .select(:user_id, :hours)
                     .group_by(&:user)
-    @total_hours  = @time_entries.first.last
+    @total_hours  = @time_entries.map(&:hours).inject(0, :+).round(2)
   end
 
   def user
@@ -14,7 +14,7 @@ class ReportController < ApplicationController
     @user         = User.find_by(fb_staff_id: fb_staff_id)
     @time_entries = TimeEntry.where(fb_staff_id: fb_staff_id,
                                     date: get_date)
-    @total_hours  = @time_entries.pluck(:hours).inject(0, :+).try(:round, 2)
+    @total_hours  = @time_entries.pluck(:hours).inject(0, :+).round(2)
   end
 
   private
