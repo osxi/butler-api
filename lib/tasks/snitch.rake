@@ -3,7 +3,7 @@ slack = SlackApi::Chat.new(ENV['SLACK_API_TOKEN'])
 namespace :snitch do
   desc "Alert when people forget to log time at end of day."
   task deficient_hours: :environment do
-    date      = DateTime.now - 1.day
+    date      = DateTime.now
     from      = date.beginning_of_day
     to        = date.end_of_day
     message   = ''
