@@ -43,6 +43,7 @@ gem "jsonapi-resources"
 gem "ruby-freshbooks"
 gem "ruby-trello"
 gem "airbrake"
+gem "httparty"
 
 group :production, :staging do
   gem "rails_12factor"
