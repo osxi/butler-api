@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Team, :type => :model do
+RSpec.describe Team, type: :model do
   let(:team) { FactoryGirl.create(:team) }
   context 'has many' do
     it 'users' do

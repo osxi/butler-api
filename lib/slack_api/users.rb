@@ -2,7 +2,7 @@ module SlackApi
   class Users < Client
     def info(user_id)
       self.class.get('/users.info',
-        { query: @options[:query].merge({user: user_id}) })
+                     query: @options[:query].merge(user: user_id))
     end
 
     def list

@@ -5,7 +5,7 @@ module SlackApi
     # debug_output $stdout
 
     def initialize(token)
-      @options = { query: {token: token} }
+      @options = { query: { token: token } }
     end
   end
 end

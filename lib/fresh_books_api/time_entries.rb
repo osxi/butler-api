@@ -33,7 +33,7 @@ module FreshBooksApi
 
     def get_freshbooks_staff_name(staff_id)
       res = respond client.staff.get(staff_id: staff_id)
-      res['staff']['first_name'] +' '+ res['staff']['last_name']
+      res['staff']['first_name'] + ' ' + res['staff']['last_name']
     end
 
     def get_freshbooks_project_name(project_id)
