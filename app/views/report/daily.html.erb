@@ -1,5 +1,7 @@
 <h1>Daily Report for <%= @team.try(:name)||'All' %> Team</h1>
 
+<h4><%= date_range_formatter(@date_range) %></h4>
+
 <table>
   <tr>
     <th>Name</th>

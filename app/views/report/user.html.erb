@@ -1,4 +1,6 @@
-<h1>User Report for <%= @user.name %></h1>
+<h1>User Report for <%= @user.try(:name) || 'Nobody' %></h1>
+
+<h4><%= date_range_formatter(@date_range) %></h4>
 
 <table>
   <tr>
