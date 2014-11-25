@@ -21,12 +21,12 @@ class ReportController < ApplicationController
 
   def get_date
     if params[:date].present?
-      day  = Date.strptime(params[:date], '%m/%d/%Y')
-      to   = day.beginning_of_day
-      from = day.end_of_day
-      return to..from
+      day   = Date.strptime(params[:date], '%m/%d/%Y')
+      to    = day.beginning_of_day
+      from  = day.end_of_day
+      @date_range = to..from
     else
-      return nil
+      @date_range = Time.now.beginning_of_day..Time.now.end_of_day
     end
   end
 end
