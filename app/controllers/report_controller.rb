@@ -1,12 +1,12 @@
 class ReportController < ApplicationController
   def daily
-    @team         = Team.find_by_name(params[:team]) || Team.all
-    @time_entries = @team
-                    .time_entries
+    @team         = Team.find_by_name(params[:team])
+    @time_entries = (@team.try(:time_entries) || TimeEntry.all)
                     .where(date: get_date)
                     .select(:user_id, :hours)
                     .group_by(&:user)
-    @total_hours  = @time_entries.map(&:hours).inject(0, :+).round(2)
+    @total_hours  = @time_entries.map{|user, time_entries| time_entries.map(&:hours)}
+                    .first.try(:inject, :+).try(:round, 2) || 0.0
   end
 
   def user
@@ -14,7 +14,7 @@ class ReportController < ApplicationController
     @user         = User.find_by(fb_staff_id: fb_staff_id)
     @time_entries = TimeEntry.where(fb_staff_id: fb_staff_id,
                                     date: get_date)
-    @total_hours  = @time_entries.pluck(:hours).inject(0, :+).round(2)
+    @total_hours  = @time_entries.pluck(:hours).inject(:+).try(:round, 2) || 0.0
   end
 
   private
