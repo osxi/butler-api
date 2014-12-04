@@ -31,6 +31,21 @@ module FreshBooksApi
       end
     end
 
+    def get_freshbooks_staff_name(staff_id)
+      res = respond client.staff.get(staff_id: staff_id)
+      res['staff']['first_name'] + ' ' + res['staff']['last_name']
+    end
+
+    def get_freshbooks_project_name(project_id)
+      res = respond client.project.get(project_id: project_id)
+      res['project']['name']
+    end
+
+    def get_freshbooks_task_name(task_id)
+      res = respond client.task.get(task_id: task_id)
+      res['task']['name']
+    end
+
     private
 
     def find_and_update_entry(fb_entry, trello_card_id)
@@ -48,6 +63,10 @@ module FreshBooksApi
       time_entry.date           = entry['date']
       time_entry.notes          = entry['notes']
       time_entry.trello_card_id = trello_card_id
+      time_entry.name           = get_freshbooks_staff_name(entry['staff_id'])
+      time_entry.project_name   = get_freshbooks_project_name(entry['project_id'])
+      time_entry.task_name      = get_freshbooks_task_name(entry['task_id'])
+      time_entry.user           = User.find_by(fb_staff_id: entry['staff_id'])
       time_entry
     end
 

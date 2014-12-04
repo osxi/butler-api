@@ -345,6 +345,7 @@ DEPENDENCIES
   guard-rubocop
   guard-unicorn
   hirefire-resource
+  httparty
   jquery-rails
   jsonapi-resources
   pg

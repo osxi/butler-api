@@ -1,0 +1,31 @@
+<h1>User Report for <%= @user.try(:name) || 'Nobody' %></h1>
+
+<h4><%= date_range_formatter(@date_range) %></h4>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Task</th>
+    <th>Notes</th>
+    <th>Hours</th>
+    <th>Date</th>
+    <th>Trello Card ID</th>
+  </tr>
+  <% @time_entries.each do |time_entry| %>
+    <tr>
+      <td><%= time_entry.project_name %></td>
+      <td><%= time_entry.task_name %></td>
+      <td><%= time_entry.notes %></td>
+      <td><%= time_entry.hours %></td>
+      <td><%= time_entry.date.try(:strftime, '%m/%d/%Y') %></td>
+      <td><%= time_entry.trello_card_id||'N/A' %></td>
+    </tr>
+  <% end %>
+  <% if @time_entries.blank? %>
+    <tr><td colspan='8'><strong>No records found.</strong></td></tr>
+  <% end %>
+</table>
+
+<p>
+  Total hours logged: <strong><%= @total_hours %></strong>
+</p>

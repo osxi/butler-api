@@ -13,3 +13,6 @@ Documentation:
 
 Metrics/AbcSize:
   Max: 20
+
+Metrics/LineLength:
+  Enabled: false
