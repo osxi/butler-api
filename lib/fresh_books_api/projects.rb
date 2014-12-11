@@ -10,22 +10,45 @@ module FreshBooksApi
         project.name        = fb_project['name']
         project.description = fb_project['description']
 
-        # Touch tasks
-        fb_project['tasks']['task'].each do |task|
-          if Task.where(fb_task_id: task['task_id']).blank?
-            project.tasks.create(fb_task_id: task['task_id'])
-          end
-        end
-
-        # Associate users
-        fb_project['staff']['staff'].each do |fb_staff|
-          user = User.find_by_id(fb_staff[1])
-          if user.present? && !project.users.include?(user)
-            project.users << user if user.present?
-          end
-        end
+        build_tasks project, fb_project
+        build_staff project, fb_project
 
         project.save! if project.changed?
+      end
+    end
+
+    private
+
+    def build_tasks(project, fb_project)
+      fb_project['tasks']['task'].each do |task|
+        find_or_add_task(get_task_id(task), project)
+      end
+    end
+
+    def get_task_id(task)
+      if task.is_a? Array
+        task[1]
+      else
+        task['task_id']
+      end
+    end
+
+    def find_or_add_task(task_id, project)
+      if Task.find_by(fb_task_id: task_id).blank?
+        project.tasks.new(fb_task_id: task_id)
+      end
+    end
+
+    def build_staff(project, fb_project)
+      fb_project['staff']['staff'].each do |fb_staff|
+        find_or_add_staff(fb_staff[1].to_i, project)
+      end
+    end
+
+    def find_or_add_staff(staff_id, project)
+      user = User.find_by(fb_staff_id: staff_id)
+      if user.present? && !project.users.include?(user)
+        project.users << user
       end
     end
   end
