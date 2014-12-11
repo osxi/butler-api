@@ -1,11 +1,7 @@
 namespace :freshbooks do
   desc 'Import all Freshbooks data'
-  task all: :environment do
-    Rake::Task['freshbooks:import_staff'].invoke
-    Rake::Task['freshbooks:import_time_entries'].invoke
-    Rake::Task['freshbooks:import_projects'].invoke
-    Rake::Task['freshbooks:import_tasks'].invoke
-  end
+  task all: [:environment, :import_staff, :import_time_entries,
+             :import_projects, :import_tasks]
 
   desc 'import time entries, date format [2014-10-12,2014-10-13]'
   task :import_time_entries, [:from_day, :to_day] => [:environment] do |_t, args|
