@@ -1,7 +1,8 @@
 class TimeEntry < ActiveRecord::Base
   belongs_to :user
+  belongs_to :project
   has_many :teams, through: :user
-  belongs_to :task, foreign_key: :fb_task_id, primary_key: :fb_task_id
+  belongs_to :task
 
   def update_from_freshbooks(client)
     return unless fb_id.present?

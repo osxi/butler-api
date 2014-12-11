@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210205425) do
+ActiveRecord::Schema.define(version: 20141211232125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,12 +71,13 @@ ActiveRecord::Schema.define(version: 20141210205425) do
     t.string   "trello_card_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "project_name"
-    t.string   "task_name"
     t.integer  "user_id"
+    t.integer  "task_id"
+    t.integer  "project_id"
   end
 
+  add_index "time_entries", ["project_id"], name: "index_time_entries_on_project_id", using: :btree
+  add_index "time_entries", ["task_id"], name: "index_time_entries_on_task_id", using: :btree
   add_index "time_entries", ["trello_card_id"], name: "index_time_entries_on_trello_card_id", using: :btree
 
   create_table "users", force: true do |t|
