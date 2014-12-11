@@ -3,6 +3,8 @@ namespace :freshbooks do
   task all: :environment do
     Rake::Task['freshbooks:import_staff'].invoke
     Rake::Task['freshbooks:import_time_entries'].invoke
+    Rake::Task['freshbooks:import_projects'].invoke
+    Rake::Task['freshbooks:import_tasks'].invoke
   end
 
   desc 'import time entries, date format [2014-10-12,2014-10-13]'
@@ -23,5 +25,21 @@ namespace :freshbooks do
             .new(ENV['FB_API_URL'], ENV['FB_AUTH_TOKEN'])
             .import_all
     puts "Processed #{users.length} staff."
+  end
+
+  desc 'Import Projects'
+  task import_projects: :environment do
+    projects = FreshBooksApi::Projects
+               .new(ENV['FB_API_URL'], ENV['FB_AUTH_TOKEN'])
+               .import_all
+    puts "Processed #{projects.length} projects."
+  end
+
+  desc 'Import Tasks'
+  task import_tasks: :environment do
+    tasks = FreshBooksApi::Tasks
+            .new(ENV['FB_API_URL'], ENV['FB_AUTH_TOKEN'])
+            .import_all
+    puts "Processed #{tasks.length} tasks."
   end
 end
