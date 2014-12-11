@@ -9,6 +9,12 @@ describe FreshBooksApi::TimeEntryParser do
         its(:card_id) { should eql 'GyMwvpq9' }
       end
 
+      context 'CAPS' do
+        subject { FreshBooksApi::TimeEntryParser.new('Hello (TRELLO:GyMwvpq9)') }
+
+        its(:card_id) { should eql 'GyMwvpq9' }
+      end
+
       context 'extra whitespace' do
         subject { FreshBooksApi::TimeEntryParser.new(' Hello (trello:GyMwvpq9) ') }
 
