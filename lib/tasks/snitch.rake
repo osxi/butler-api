@@ -11,6 +11,8 @@ namespace :snitch do
     User.all.each do |user|
       user_hours = user.time_entries.where(date: from..to).map(&:hours).inject(:+) || 0
 
+      puts "#{user.name}: #{user_hours}"
+
       if user_hours < 6
         today    = Time.now.strftime('%Y-%m-%d')
         message += 'You have less than six hours logged in Freshbooks. ' \
@@ -18,8 +20,6 @@ namespace :snitch do
                    "(https://poeticsystems.freshbooks.com/timesheet#date/#{today})"
         slack.post_message(channel: user.slack_id, text: message,
                            username: 'Butler')
-      else
-        next
       end
     end
   end
