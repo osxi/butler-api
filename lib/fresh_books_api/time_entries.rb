@@ -24,26 +24,8 @@ module FreshBooksApi
       entries.map do |fb_entry|
         trello_card_id = get_trello_card_id(fb_entry['notes'])
 
-        time_entry = find_and_update_entry(fb_entry, trello_card_id)
-
-        time_entry.save
-        time_entry
+        find_and_update_entry(fb_entry, trello_card_id)
       end
-    end
-
-    def get_freshbooks_staff_name(staff_id)
-      res = respond client.staff.get(staff_id: staff_id)
-      res['staff']['first_name'] + ' ' + res['staff']['last_name']
-    end
-
-    def get_freshbooks_project_name(project_id)
-      res = respond client.project.get(project_id: project_id)
-      res['project']['name']
-    end
-
-    def get_freshbooks_task_name(task_id)
-      res = respond client.task.get(task_id: task_id)
-      res['task']['name']
     end
 
     private
@@ -56,17 +38,15 @@ module FreshBooksApi
     end
 
     def update_properties(time_entry, entry, trello_card_id)
-      time_entry.fb_staff_id    = entry['staff_id']
-      time_entry.fb_project_id  = entry['project_id']
-      time_entry.fb_task_id     = entry['task_id']
-      time_entry.hours          = entry['hours']
-      time_entry.date           = entry['date']
-      time_entry.notes          = entry['notes']
-      time_entry.trello_card_id = trello_card_id
-      time_entry.name           = get_freshbooks_staff_name(entry['staff_id'])
-      time_entry.project_name   = get_freshbooks_project_name(entry['project_id'])
-      time_entry.task_name      = get_freshbooks_task_name(entry['task_id'])
-      time_entry.user           = User.find_by(fb_staff_id: entry['staff_id'])
+      time_entry.update_attributes({
+        hours:           entry['hours'],
+        date:            entry['date'],
+        notes:           entry['notes'],
+        trello_card_id:  trello_card_id,
+        project: Project.find_or_initialize_by(fb_project_id: entry['project_id']),
+        task:    Task.find_or_initialize_by(fb_task_id: entry['task_id']),
+        user:    User.find_or_initialize_by(fb_staff_id: entry['staff_id'])
+      })
       time_entry
     end
 
