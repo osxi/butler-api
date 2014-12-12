@@ -1,12 +1,12 @@
-slack = SlackApi::Chat.new(ENV['SLACK_API_TOKEN'])
 
 namespace :snitch do
   desc 'Alert when people forget to log time at end of day.'
   task deficient_hours: :environment do
-    date      = DateTime.now
-    from      = date.beginning_of_day
-    to        = date.end_of_day
-    message   = ''
+    slack   = SlackApi::Chat.new(ENV['SLACK_API_TOKEN'])
+    date    = DateTime.now
+    from    = date.beginning_of_day
+    to      = date.end_of_day
+    message = ''
 
     User.all.each do |user|
       user_hours = user.time_entries.where(date: from..to).map(&:hours).inject(:+) || 0
@@ -26,6 +26,8 @@ namespace :snitch do
 
   desc 'Manager Report'
   task manager_report: :environment do
+    slack = SlackApi::Chat.new(ENV['SLACK_API_TOKEN'])
+
     User.where(manager: true).each do |manager|
       message = "Manager report for #{manager.last_name} " \
                  "#{manager.first_name}:\n"
