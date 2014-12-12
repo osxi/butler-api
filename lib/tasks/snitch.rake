@@ -14,10 +14,10 @@ namespace :snitch do
       puts "#{user.name}: #{user_hours}"
 
       if user_hours < 6
-        today    = Time.now.strftime('%Y-%m-%d')
-        message += 'You have less than six hours logged in Freshbooks. ' \
-                   'Please check your entries for today. ' \
-                   "(https://poeticsystems.freshbooks.com/timesheet#date/#{today})"
+        today   = Time.now.strftime('%Y-%m-%d')
+        message = 'You have less than six hours logged in Freshbooks. ' \
+                  'Please check your entries for today. ' \
+                  "(https://poeticsystems.freshbooks.com/timesheet#date/#{today})"
         slack.post_message(channel: user.slack_id, text: message,
                            username: 'Butler')
       end
