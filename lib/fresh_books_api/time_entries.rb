@@ -35,11 +35,19 @@ module FreshBooksApi
 
       project_ids.inject([]) do |res, project_id|
         entries = all(project_id: project_id, date_from: from, date_to: to)
+        entries = add_card_ids_to_time_entries(entries)
         res.concat(entries)
       end
     end
 
     private
+
+    def add_card_ids_to_time_entries(time_entries)
+      time_entries.map do |entry|
+        entry['trello_card_id'] = get_trello_card_id(entry['notes'])
+        entry
+      end
+    end
 
     def find_and_update_entry(fb_entry, trello_card_id)
       query      = { fb_id: fb_entry['time_entry_id'] }

@@ -34,7 +34,8 @@ describe FreshBooksApi::TimeEntries do
     it 'should have correct keys' do
       expect(subject.first.keys).to eq(['time_entry_id', 'staff_id',
                                         'project_id', 'task_id', 'hours',
-                                        'date', 'notes', 'billed'])
+                                        'date', 'notes', 'billed',
+                                        'trello_card_id'])
     end
   end
 end
