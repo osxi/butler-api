@@ -35,7 +35,26 @@ class TrelloApi
     comment
   end
 
+  def report(board_ids: [])
+    fields = ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
+    board_ids.inject([]) do |all_cards, board_id|
+      board_cards = client.get board_cards_path(board_id), fields: fields
+      board_cards = add_time_info(JSON.parse(board_cards))
+      all_cards.concat board_cards
+    end
+  end
+
   private
+
+  def add_time_info(cards)
+    cards.map do |card|
+      parser = Trello::CardParser.new(card['name'])
+      card['actual']   = parser.get_actual
+      card['estimate'] = parser.get_estimate
+      card
+    end
+  end
+
 
   def json_value(res)
     json = JSON.parse(res)
@@ -43,6 +62,10 @@ class TrelloApi
     return json['_value'] if json['_value'].present?
 
     json
+  end
+
+  def board_cards_path(id)
+    "/boards/#{id}/cards"
   end
 
   def card_name_path(id)

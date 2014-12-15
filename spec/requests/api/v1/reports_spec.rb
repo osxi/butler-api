@@ -19,4 +19,21 @@ describe 'Reports' do
       end
     end
   end
+
+  describe '/trello/cards' do
+    describe 'get', :vcr do
+      before do
+        get '/api/v1/reports/trello/cards',
+          board_ids: ['wusd8mr6']
+      end
+
+      it 'should be success' do
+        expect(response).to be_success
+      end
+
+      it 'returns a list' do
+        expect(json['cards'].length).to be > 0
+      end
+    end
+  end
 end

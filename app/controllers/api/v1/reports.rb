@@ -31,6 +31,22 @@ module API
           end
         end
       end
+
+      resource :trello do
+        resource :cards do
+          desc 'Return all cards for given boards.'
+          params do
+            requires :board_ids, type: Array,
+              desc: 'Trello IDs of boards to get back'
+          end
+
+          get do
+            client = TrelloApi.new(ENV['TRELLO_KEY'], ENV['TRELLO_TOKEN'])
+            cards  = client.report(board_ids: permitted_params[:board_ids])
+            { cards: cards }
+          end
+        end
+      end
     end
   end
 end
