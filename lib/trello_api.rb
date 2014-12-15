@@ -37,12 +37,17 @@ class TrelloApi
 
   def report(board_ids: [])
     fields = ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
+
     cards = board_ids.inject([]) do |all_cards, board_id|
       board_cards = client.get board_cards_path(board_id), fields: fields
       all_cards.concat JSON.parse(board_cards)
     end
 
-    remove_unwanted_fields add_non_default_fields(cards)
+    cards = remove_unwanted_fields add_non_default_fields(cards)
+
+    cards.map do |card|
+      underscore_keys card
+    end
   end
 
   def date_from_id(id)
@@ -51,6 +56,12 @@ class TrelloApi
   end
 
   private
+
+  def underscore_keys(card)
+    card.keys.each_with_object({}) do |key, result|
+      result[key.underscore] = card[key]
+    end
+  end
 
   def remove_unwanted_fields(cards)
     cards.map do |card|
