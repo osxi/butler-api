@@ -39,9 +39,16 @@ class TrelloApi
     fields = ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
     board_ids.inject([]) do |all_cards, board_id|
       board_cards = client.get board_cards_path(board_id), fields: fields
-      board_cards = add_time_info(JSON.parse(board_cards))
+      board_cards = JSON.parse(board_cards)
+      board_cards = add_time_info(board_cards)
+      board_cards = add_created_at(board_cards)
       all_cards.concat board_cards
     end
+  end
+
+  def date_from_id(id)
+    timestamp = id.to_s[0..7].to_i(16)
+    Time.at(timestamp).to_datetime
   end
 
   private
@@ -55,6 +62,12 @@ class TrelloApi
     end
   end
 
+  def add_created_at(cards)
+    cards.map do |card|
+      card['createdAt'] = date_from_id(card['id'])
+      card
+    end
+  end
 
   def json_value(res)
     json = JSON.parse(res)
