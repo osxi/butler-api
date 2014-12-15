@@ -32,10 +32,8 @@ describe FreshBooksApi::TimeEntries do
     it { is_expected.to be_an_instance_of(Array) }
 
     it 'should have correct keys' do
-      expect(subject.first.keys).to eq(['time_entry_id', 'staff_id',
-                                        'project_id', 'task_id', 'hours',
-                                        'date', 'notes', 'billed',
-                                        'trello_card_id'])
+      expect(subject.first.keys).to eq(['hours', 'date', 'notes', 'billed',
+                                        'trello_card_id', 'staff_name'])
     end
   end
 end

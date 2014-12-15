@@ -33,20 +33,38 @@ module FreshBooksApi
       from = from.strftime(TIME_FORMAT)
       to   = to.strftime(TIME_FORMAT)
 
-      project_ids.inject([]) do |res, project_id|
+      entries = project_ids.inject([]) do |res, project_id|
         entries = all(project_id: project_id, date_from: from, date_to: to)
-        entries = add_card_ids_to_time_entries(entries)
         res.concat(entries)
       end
+
+      remove_unwanted_fields add_non_default_fields(entries)
     end
 
     private
 
-    def add_card_ids_to_time_entries(time_entries)
+    def remove_unwanted_fields(time_entries)
       time_entries.map do |entry|
-        entry['trello_card_id'] = get_trello_card_id(entry['notes'])
+        entry.except('time_entry_id', 'project_id', 'task_id', 'staff_id')
+      end
+    end
+
+    def add_non_default_fields(time_entries)
+      time_entries.map do |entry|
+        entry = add_card_id(entry)
+        entry = add_staff_name(entry)
         entry
       end
+    end
+
+    def add_card_id(entry)
+      entry['trello_card_id'] = get_trello_card_id(entry['notes'])
+      entry
+    end
+
+    def add_staff_name(entry)
+      entry['staff_name'] = User.try_name_from_fb_staff_id(entry['staff_id'])
+      entry
     end
 
     def find_and_update_entry(fb_entry, trello_card_id)

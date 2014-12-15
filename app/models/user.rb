@@ -7,4 +7,11 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
+
+  class << self
+    def try_name_from_fb_staff_id(id)
+      user = User.find_by(fb_staff_id: id)
+      user.try(:name) || 'Unknown Staff'
+    end
+  end
 end
