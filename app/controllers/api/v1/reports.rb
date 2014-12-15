@@ -43,6 +43,11 @@ module API
           get do
             client = TrelloApi.new(ENV['TRELLO_KEY'], ENV['TRELLO_TOKEN'])
             cards  = client.report(board_ids: permitted_params[:board_ids])
+            cards = cards.map do |card|
+              card['created_at'] = card['created_at'].strftime("%m/%d/%Y %H:%M:%S")
+              card
+            end
+
             { cards: cards }
           end
         end
