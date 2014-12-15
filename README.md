@@ -1,5 +1,9 @@
 # Butler API
 
+*This is currently an internal project so it's very specific to our process. We
+plan on making it more configurable and provide docs and ways for others to set
+it up sometime in the future. There is no ETA on that currently.*
+
 This is the backend of Butler. It will contain various API endpoints and service
 integrations. It is a Rails app using Grape API for the endpoints and Postgres
 for the database.
@@ -7,7 +11,7 @@ for the database.
 ## Configuration
 
 Environment config is set in the application.yml file. It is not committed to
-this repo. You will need to get it from someone.
+this repo. You will need to get it from someone at Poetic.
 
 ## Database initialization
 
@@ -16,11 +20,10 @@ this repo. You will need to get it from someone.
 
 ## How to run the test suite
 
-The fixtures and application.yml are not committed to this repo so the tests
-will not run on anyone but Jake's machine. We'll need to figure out a way to do
-this in the future but there is sensitive data that gives full access to
-freshbooks that we have to keep safe.
+You'll need to get a copy of the `application.yml` from someone at Poetic so
+that the test servers are used and your fixtures are generated.
 
 ## Deployment instructions
 
-TODO
+[@jakecraige](github.com/jakecraige) can do pushes to produciton after your
+changes are merged into master and testa rea passing.
