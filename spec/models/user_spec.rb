@@ -21,4 +21,23 @@ RSpec.describe User, type: :model do
       expect('Unknown Staff').to eq User.try_name_from_fb_staff_id(8123)
     end
   end
+
+  describe 'creates authentication token before_save' do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it 'creates one if blank' do
+      user.authentication_token = ''
+      user.save
+
+      expect(user.authentication_token).to_not eq ''
+    end
+
+    it 'doesn\'t update if already exists' do
+      user.authentication_token = 'existingToken'
+      user.save
+
+      expect(user.authentication_token).to eq 'existingToken'
+    end
+
+  end
 end

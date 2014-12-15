@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211232125) do
+ActiveRecord::Schema.define(version: 20141215201403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +89,9 @@ ActiveRecord::Schema.define(version: 20141211232125) do
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "manager",         default: false
+    t.boolean  "manager",              default: false
     t.string   "slack_id"
+    t.string   "authentication_token"
   end
 
 end
