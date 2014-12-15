@@ -1,4 +1,4 @@
-# Butler API
+# Butler API [![Code Climate](https://codeclimate.com/github/poetic/butler-api/badges/gpa.svg)](https://codeclimate.com/github/poetic/butler-api)
 
 *This is currently an internal project so it's very specific to our process. We
 plan on making it more configurable and provide docs and ways for others to set
