@@ -3,6 +3,8 @@ module API
     class Reports < Grape::API
       include API::V1::Defaults
 
+      before { authenticate! }
+
       resource :freshbooks do
         resource :time_entries do
           desc 'Return all time entries for given projects.'

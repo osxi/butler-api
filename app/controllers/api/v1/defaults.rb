@@ -17,6 +17,15 @@ module API
           def logger
             Rails.logger
           end
+
+          def authenticated
+            auth_token = params[:authentication_token]
+            auth_token && @user = User.find_by(authentication_token: auth_token)
+          end
+
+          def authenticate!
+            error!('401 Unauthorized', 401) unless authenticated
+          end
         end
 
         rescue_from NoMethodError do |e|
