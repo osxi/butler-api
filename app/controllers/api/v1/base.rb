@@ -6,6 +6,10 @@
         mount API::V1::Tasks
         mount API::V1::TimeEntries
 
+        resource :reports do
+          mount API::V1::Reports
+        end
+
         add_swagger_documentation(
           api_version: 'v1',
           hide_documentation_path: true,

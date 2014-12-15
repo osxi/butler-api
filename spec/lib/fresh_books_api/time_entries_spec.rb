@@ -22,4 +22,19 @@ describe FreshBooksApi::TimeEntries do
 
     its(:first) { is_expected.to be_an_instance_of(TimeEntry) }
   end
+
+  context '#report', :vcr do
+    let(:from) { Date.iso8601('2014-12-15T00:00:00.213Z') }
+    let(:to)   { Date.iso8601('2014-12-15T23:59:59.213Z') }
+
+    subject { client.report(project_ids: [3020], from: from, to: to) }
+
+    it { is_expected.to be_an_instance_of(Array) }
+
+    it 'should have correct keys' do
+      expect(subject.first.keys).to eq(['time_entry_id', 'staff_id',
+                                        'project_id', 'task_id', 'hours',
+                                        'date', 'notes', 'billed'])
+    end
+  end
 end

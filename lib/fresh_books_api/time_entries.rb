@@ -29,6 +29,16 @@ module FreshBooksApi
       end
     end
 
+    def report(project_ids:, from:, to:)
+      from = from.strftime(TIME_FORMAT)
+      to   = to.strftime(TIME_FORMAT)
+
+      project_ids.inject([]) do |res, project_id|
+        entries = all(project_id: project_id, date_from: from, date_to: to)
+        res.concat(entries)
+      end
+    end
+
     private
 
     def find_and_update_entry(fb_entry, trello_card_id)
