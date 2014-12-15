@@ -1,4 +1,4 @@
-# Butler API [![Code Climate](https://codeclimate.com/github/poetic/butler-api/badges/gpa.svg)](https://codeclimate.com/github/poetic/butler-api)
+# Butler API [![Code Climate](https://codeclimate.com/github/poetic/butler-api/badges/gpa.svg)](https://codeclimate.com/github/poetic/butler-api) [ ![Codeship Status for poetic/butler-api](https://codeship.com/projects/ec2c7b60-66cd-0132-83d8-7259638a7ad7/status?branch=master)](https://codeship.com/projects/52948)
 
 *This is currently an internal project so it's very specific to our process. We
 plan on making it more configurable and provide docs and ways for others to set
