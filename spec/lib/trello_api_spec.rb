@@ -41,7 +41,7 @@ describe TrelloApi do
     it 'returns an array with cards' do
       cards = client.report(board_ids: ['wusd8mr6'])
       expect(cards.length).to be > 0
-      expect(cards.first.keys).to eq ['id', 'name', 'desc', 'shortLink',
+      expect(cards.first.keys).to eq ['name', 'desc', 'shortLink',
                                       'shortUrl', 'actual', 'estimate',
                                       'createdAt']
     end

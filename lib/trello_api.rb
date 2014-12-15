@@ -37,13 +37,12 @@ class TrelloApi
 
   def report(board_ids: [])
     fields = ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
-    board_ids.inject([]) do |all_cards, board_id|
+    cards = board_ids.inject([]) do |all_cards, board_id|
       board_cards = client.get board_cards_path(board_id), fields: fields
-      board_cards = JSON.parse(board_cards)
-      board_cards = add_time_info(board_cards)
-      board_cards = add_created_at(board_cards)
-      all_cards.concat board_cards
+      all_cards.concat JSON.parse(board_cards)
     end
+
+    remove_unwanted_fields add_non_default_fields(cards)
   end
 
   def date_from_id(id)
@@ -53,20 +52,30 @@ class TrelloApi
 
   private
 
-  def add_time_info(cards)
+  def remove_unwanted_fields(cards)
     cards.map do |card|
-      parser = Trello::CardParser.new(card['name'])
-      card['actual']   = parser.get_actual
-      card['estimate'] = parser.get_estimate
+      card.except('id')
+    end
+  end
+
+  def add_non_default_fields(cards)
+    cards.map do |card|
+      card = add_time_info(card)
+      card = add_created_at(card)
       card
     end
   end
 
-  def add_created_at(cards)
-    cards.map do |card|
-      card['createdAt'] = date_from_id(card['id'])
-      card
-    end
+  def add_time_info(card)
+    parser = Trello::CardParser.new(card['name'])
+    card['actual']   = parser.get_actual
+    card['estimate'] = parser.get_estimate
+    card
+  end
+
+  def add_created_at(card)
+    card['createdAt'] = date_from_id(card['id'])
+    card
   end
 
   def json_value(res)
