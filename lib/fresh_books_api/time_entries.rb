@@ -1,5 +1,7 @@
 module FreshBooksApi
   class TimeEntries < Client
+    TIME_FORMAT = '%Y-%m-%d'
+
     def create(attributes)
       attributes[:date] = Date.today unless attributes[:date].present?
       respond client.time_entry.create(time_entry: attributes.to_h)
@@ -17,9 +19,8 @@ module FreshBooksApi
       from = DateTime.now - 1.days unless from.present?
       to   = DateTime.now unless to.present?
 
-      time_format = '%Y-%m-%d'
-      entries = all(date_from: from.strftime(time_format),
-                    date_to:   to.strftime(time_format))
+      entries = all(date_from: from.strftime(TIME_FORMAT),
+                    date_to:   to.strftime(TIME_FORMAT))
 
       entries.map do |fb_entry|
         trello_card_id = get_trello_card_id(fb_entry['notes'])
