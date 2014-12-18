@@ -4,9 +4,9 @@ class ReportController < ApplicationController
     @time_entries = (@team.try(:time_entries) || TimeEntry.all)
                     .where(date: params_date_range)
                     .select(:user_id, :hours)
-                    .group_by(&:user)
-    @total_hours  = @time_entries.map { |_user, time_entries| time_entries.map(&:hours) }
-                    .first.try(:inject, :+).try(:round, 2) || 0.0
+                    .group_by(&:user_id)
+    @total_hours  = @time_entries.map { |_user, time_entries| time_entries.map(&:hours).inject(:+) }
+                    .try(:inject, :+).try(:round, 2) || 0.0
   end
 
   def user
