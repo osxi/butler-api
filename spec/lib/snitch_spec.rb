@@ -7,17 +7,17 @@ describe Snitch do
 
   context '#user' do
     it 'includes everyone', :vcr do
-      expect(snitch.user).to include(user, manager)
+      expect(snitch.send_deficient_hours_report).to include(user, manager)
     end
   end
 
   describe '#manager', :vcr do
     it 'operates on managers' do
-      expect(snitch.manager).to include(manager)
+      expect(snitch.send_manager_report).to include(manager)
     end
 
     it 'ignores non-managers' do
-      expect(snitch.manager).to_not include(user)
+      expect(snitch.send_manager_report).to_not include(user)
     end
   end
 end
