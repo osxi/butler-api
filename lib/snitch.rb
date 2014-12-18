@@ -22,7 +22,7 @@ class Snitch
                   'Please check your entries for today. ' \
                   "https://poeticsystems.freshbooks.com/timesheet#date/#{today}"
         @slack.post_message(channel: user.slack_id, text: message,
-                           username: 'Butler')
+                            username: 'Butler')
       end
     end
   end
@@ -36,7 +36,7 @@ class Snitch
       message    = "Here's yesterday's report for your team: " \
                    "#{report_url}?date=#{yesterday}&team=#{team}"
       @slack.post_message(channel: user.slack_id, text: message,
-                         username: 'Butler')
+                          username: 'Butler')
     end
   end
 end
