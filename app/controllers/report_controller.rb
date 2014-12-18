@@ -1,12 +1,8 @@
 class ReportController < ApplicationController
   def daily
-    @team         = Team.find_by_name(params[:team])
-    @time_entries = (@team.try(:time_entries) || TimeEntry.all)
-                    .where(date: params_date_range)
-                    .select(:user_id, :hours)
-                    .group_by(&:user_id)
-    @total_hours  = @time_entries.map { |_user, time_entries| time_entries.map(&:hours).inject(:+) }
-                    .try(:inject, :+).try(:round, 2) || 0.0
+    @team         = Team.includes(:user).find_by(name: params[:team])
+    @total_hours  = total_daily_hours
+    @time_entries = daily_time_entries.group_by(&:user)
   end
 
   def user
@@ -14,10 +10,27 @@ class ReportController < ApplicationController
     @user         = User.find_by(fb_staff_id: fb_staff_id)
     @time_entries = TimeEntry.where(fb_staff_id: fb_staff_id,
                                     date: params_date_range)
-    @total_hours  = @time_entries.pluck(:hours).inject(:+).try(:round, 2) || 0.0
+    @total_hours  = sum_hours @time_entries
   end
 
   private
+
+  def total_daily_hours
+    sum_hours daily_time_entries
+  end
+
+  def daily_time_entries
+    @daily_entries ||= if @team
+                         @team.time_entries
+                       else
+                         TimeEntry.includes(:user).all
+                       end.where(date: params_date_range).select(:user_id,
+                                                                 :hours)
+  end
+
+  def sum_hours(time_entries)
+    time_entries.pluck(:hours).sum.round(2)
+  end
 
   def params_date_range
     if params[:date].present?
