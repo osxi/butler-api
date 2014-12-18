@@ -36,28 +36,4 @@ describe TrelloApi do
       expect(res).to eql 'a new comment'
     end
   end
-
-  context '#report', :vcr do
-    it 'returns an array with cards' do
-      cards = client.report(board_ids: ['wusd8mr6'])
-      expect(cards.length).to be > 0
-      expect(cards.first.keys).to eq ['name', 'desc', 'short_link',
-                                      'short_url', 'actual', 'estimate',
-                                      'created_at']
-    end
-  end
-
-  context '#date_from_id' do
-    subject { client.date_from_id('4d5ea62fd76aa1136000000c') }
-
-    it 'gets a datetime' do
-      expect(subject).to be_an_instance_of(DateTime)
-    end
-
-    it 'gets correct date' do
-      # deal with CI time zone differences
-      time_string = subject.in_time_zone('Central Time (US & Canada)').to_s
-      expect(time_string).to eq "2011-02-18 11:02:39 -0600"
-    end
-  end
 end

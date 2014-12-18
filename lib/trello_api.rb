@@ -36,58 +36,10 @@ class TrelloApi
   end
 
   def report(board_ids: [])
-    fields = ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
-
-    cards = board_ids.inject([]) do |all_cards, board_id|
-      board_cards = client.get board_cards_path(board_id), fields: fields
-      all_cards.concat JSON.parse(board_cards)
-    end
-
-    cards = remove_unwanted_fields add_non_default_fields(cards)
-
-    cards.map do |card|
-      underscore_keys card
-    end
-  end
-
-  def date_from_id(id)
-    timestamp = id.to_s[0..7].to_i(16)
-    Time.at(timestamp).to_datetime
+    Trello::Reporter.new(client).report(board_ids: board_ids)
   end
 
   private
-
-  def underscore_keys(card)
-    card.keys.each_with_object({}) do |key, result|
-      result[key.underscore] = card[key]
-    end
-  end
-
-  def remove_unwanted_fields(cards)
-    cards.map do |card|
-      card.except('id')
-    end
-  end
-
-  def add_non_default_fields(cards)
-    cards.map do |card|
-      card = add_time_info(card)
-      card = add_created_at(card)
-      card
-    end
-  end
-
-  def add_time_info(card)
-    parser = Trello::CardParser.new(card['name'])
-    card['actual']   = parser.get_actual
-    card['estimate'] = parser.get_estimate
-    card
-  end
-
-  def add_created_at(card)
-    card['createdAt'] = date_from_id(card['id'])
-    card
-  end
 
   def json_value(res)
     json = JSON.parse(res)
@@ -95,10 +47,6 @@ class TrelloApi
     return json['_value'] if json['_value'].present?
 
     json
-  end
-
-  def board_cards_path(id)
-    "/boards/#{id}/cards"
   end
 
   def card_name_path(id)
