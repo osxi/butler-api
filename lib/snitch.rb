@@ -2,41 +2,55 @@ class Snitch
   def initialize(slack_api_token, date)
     @slack = SlackApi::Chat.new(slack_api_token)
     @dates = OpenStruct.new({
-      today: date,
-      yesterday: date - 1.day,
-      from: date.beginning_of_day,
-      to: date.end_of_day
+      today:      date,
+      yesterday:  date - 1.day,
+      all_day:    date.beginning_of_day..date.end_of_day
     })
   end
 
-  def user
+  def send_deficient_hours_report
     User.all.each do |user|
-      user_hours = user.time_entries.where(date: @dates.from..@dates.to)
-                   .map(&:hours).inject(:+) || 0
+      user_hours = user.hours_in_range(@dates.all_day)
 
       puts "#{user.name}: #{user_hours}"
 
-      if user_hours < 6
-        today   = @dates.today.strftime('%Y-%m-%d')
-        message = 'You have less than six hours logged in Freshbooks. ' \
-                  'Please check your entries for today. ' \
-                  "https://poeticsystems.freshbooks.com/timesheet#date/#{today}"
-        @slack.post_message(channel: user.slack_id, text: message,
-                            username: 'Butler')
-      end
+      message_if_deficient user.slack_id, user_hours
     end
   end
 
-  def manager
-    User.where(manager: true).each do |user|
-      yesterday  = @dates.yesterday.strftime('%m/%d/%Y')
-      team       = user.team.name
-      report_url = Rails.application.routes.url_helpers
-                   .report_daily_url host: ENV['ROOT_URL']
-      message    = "Here's yesterday's report for your team: " \
-                   "#{report_url}?date=#{yesterday}&team=#{team}"
-      @slack.post_message(channel: user.slack_id, text: message,
-                          username: 'Butler')
+  def send_manager_report
+    User.managers.each do |user|
+      post_message user.slack_id, manager_message(user.team.name)
     end
+  end
+
+  private
+
+  def message_if_deficient(slack_id, user_hours)
+    if user_hours < ENV['SNITCH_MINIMUM_HOURS'].to_i
+      post_message slack_id, deficient_message
+    end
+  end
+
+  def deficient_message
+    today = @dates.today.strftime('%Y-%m-%d')
+    "You have less than six hours logged in Freshbooks. " \
+    "Please check your entries for today. " \
+    "https://poeticsystems.freshbooks.com/timesheet#date/#{today}"
+  end
+
+  def manager_message(team)
+    yesterday  = @dates.yesterday.strftime('%m/%d/%Y')
+    "Here's yesterday's report for your team: " \
+    "#{manager_report_url}?date=#{yesterday}&team=#{team}"
+  end
+
+  def post_message(slack_id, message)
+    @slack.post_message(channel: slack_id, text: message, username: 'Butler')
+  end
+
+  def manager_report_url
+    @manager_report_url ||= Rails.application.routes.url_helpers
+                            .report_daily_url host: ENV['ROOT_URL']
   end
 end
