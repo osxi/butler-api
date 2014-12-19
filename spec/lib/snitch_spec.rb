@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Snitch do
-  let(:snitch)   { Snitch.new(ENV['SLACK_API_TOKEN'], Time.now) }
+  let(:snitch)   { Snitch.new(ENV['SLACK_API_TOKEN'], Date.iso8601('2014-12-17T00:00:00.213Z')) }
   let!(:user)    { FactoryGirl.create(:user) }
   let!(:manager) { FactoryGirl.create(:user, manager: true) }
 
