@@ -1,6 +1,6 @@
 class ReportController < ApplicationController
   def daily
-    @team         = Team.includes(:user).find_by(name: params[:team])
+    @team         = Team.includes(:users).find_by(name: params[:team])
     @total_hours  = total_daily_hours
     @time_entries = daily_time_entries.group_by(&:user)
   end

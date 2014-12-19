@@ -7,5 +7,6 @@ FactoryGirl.define do
     hours 1.5
     date '2014-10-31'
     trello_card_id 'abc1234'
+    association :user
   end
 end
