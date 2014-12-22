@@ -9,6 +9,7 @@ module FreshBooksApi
         task = Task.find_or_create_by(fb_task_id: fb_task['task_id'])
         task.name       = fb_task['name']
         task.fb_task_id = fb_task['task_id']
+        task.billable   = fb_task['billable'].to_b
         task.save! if task.changed?
       end
     end

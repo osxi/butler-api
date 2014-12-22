@@ -45,6 +45,7 @@ gem "ruby-freshbooks"
 gem "ruby-trello"
 gem "airbrake"
 gem "httparty"
+gem "wannabe_bool"
 
 group :production, :staging do
   gem "rails_12factor"
