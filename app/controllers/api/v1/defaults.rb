@@ -4,6 +4,7 @@ module API
       extend ActiveSupport::Concern
 
       included do
+        helpers TokenAuth
         version 'v1', using: :path
         default_format :json
         format :json
@@ -18,12 +19,7 @@ module API
             Rails.logger
           end
 
-          def authenticated
-            auth_token = params[:authentication_token]
-            auth_token && @user = User.find_by(authentication_token: auth_token)
-          end
-
-          def authenticate!
+          def unauthorized
             error!('401 Unauthorized', 401) unless authenticated
           end
         end

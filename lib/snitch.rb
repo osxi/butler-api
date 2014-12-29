@@ -20,7 +20,7 @@ class Snitch
 
   def send_manager_report
     User.managers.each do |user|
-      post_message user.slack_id, manager_message(user.team.name)
+      post_message user.slack_id, manager_message(user)
     end
   end
 
@@ -39,10 +39,11 @@ class Snitch
     "https://poeticsystems.freshbooks.com/timesheet#date/#{today}"
   end
 
-  def manager_message(team)
+  def manager_message(user)
     yesterday  = @dates.yesterday.strftime('%m/%d/%Y')
     "Here's yesterday's report for your team: " \
-    "#{manager_report_url}?date=#{yesterday}&team=#{team}"
+    "#{manager_report_url}?date=#{yesterday}&team=#{user.team.name}" \
+    "&authorization_token=#{user.authentication_token}"
   end
 
   def post_message(slack_id, message)
