@@ -48,14 +48,14 @@ module FreshBooksApi
 
     def update_properties(time_entry, entry, trello_card_id)
       time_entry.update_attributes({
-        hours:           entry['hours'],
-        date:            entry['date'],
-        notes:           entry['notes'],
-        trello_card_id:  trello_card_id,
-        project: Project.find_or_initialize_by(fb_project_id: entry['project_id']),
-        task:    Task.find_or_initialize_by(fb_task_id: entry['task_id']),
-        user:    User.find_or_initialize_by(fb_staff_id: entry['staff_id'])
-      })
+                                     hours:           entry['hours'],
+                                     date:            entry['date'],
+                                     notes:           entry['notes'],
+                                     trello_card_id:  trello_card_id,
+                                     project: Project.find_or_initialize_by(fb_project_id: entry['project_id']),
+                                     task:    Task.find_or_initialize_by(fb_task_id: entry['task_id']),
+                                     user:    User.find_or_initialize_by(fb_staff_id: entry['staff_id'])
+                                   })
       time_entry
     end
   end

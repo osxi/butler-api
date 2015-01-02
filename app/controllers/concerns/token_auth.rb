@@ -12,7 +12,7 @@ module TokenAuth
     end
 
     def unauthorized
-      raise NoMethodError, "#unauthorized not defined"
+      fail NoMethodError, '#unauthorized not defined'
     end
   end
 end

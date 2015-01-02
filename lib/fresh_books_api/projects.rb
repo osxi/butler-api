@@ -34,9 +34,7 @@ module FreshBooksApi
     end
 
     def find_or_add_task(task_id, project)
-      if Task.find_by(fb_task_id: task_id).blank?
-        project.tasks.new(fb_task_id: task_id)
-      end
+      project.tasks.new(fb_task_id: task_id) if Task.find_by(fb_task_id: task_id).blank?
     end
 
     def build_staff(project, fb_project)
@@ -47,9 +45,7 @@ module FreshBooksApi
 
     def find_or_add_staff(staff_id, project)
       user = User.find_by(fb_staff_id: staff_id)
-      if user.present? && !project.users.include?(user)
-        project.users << user
-      end
+      project.users << user if user.present? && !project.users.include?(user)
     end
   end
 end

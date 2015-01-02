@@ -9,17 +9,25 @@ module API
         resource :time_entries do
           desc 'Return all time entries for given projects.'
           params do
-            requires :project_ids, type: Array,
-              desc: 'Freshbooks IDs of Projects to get back'
+            requires :project_ids,
+                     type: Array,
+                     desc: 'Freshbooks IDs of Projects to get back'
 
-            optional :start_date, type: Date, default: Time.now - 2.years,
-              desc: 'Start date of query', default: Time.now - 2.years
+            optional :start_date,
+                     type: Date,
+                     default: Time.now - 2.years,
+                     desc: 'Start date of query',
+                     default: Time.now - 2.years
 
-            optional :end_date, type: Date, default: Time.now,
-              desc: 'End date of query'
+            optional :end_date,
+                     type: Date,
+                     default: Time.now,
+                     desc: 'End date of query'
 
-            optional :only_billable, type: Boolean, default: true,
-              desc: 'End date of query'
+            optional :only_billable,
+                     type: Boolean,
+                     default: true,
+                     desc: 'End date of query'
           end
 
           get do
@@ -39,15 +47,16 @@ module API
         resource :cards do
           desc 'Return all cards for given boards.'
           params do
-            requires :board_ids, type: Array,
-              desc: 'Trello IDs of boards to get back'
+            requires :board_ids,
+                     type: Array,
+                     desc: 'Trello IDs of boards to get back'
           end
 
           get do
             client = TrelloApi.new(ENV['TRELLO_KEY'], ENV['TRELLO_TOKEN'])
             cards  = client.report(board_ids: permitted_params[:board_ids])
             cards = cards.map do |card|
-              card['created_at'] = card['created_at'].strftime("%m/%d/%Y %H:%M:%S")
+              card['created_at'] = card['created_at'].strftime('%m/%d/%Y %H:%M:%S')
               card
             end
 

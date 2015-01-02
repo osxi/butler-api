@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate!
 
   def unauthorized
-    render layout: false, file: "public/401.html", status: 401
+    render layout: false, file: 'public/401.html', status: 401
   end
 end

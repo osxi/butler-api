@@ -15,47 +15,47 @@ describe Trello::CardParser do
     end
   end
 
-  context '#get_estimate' do
+  context '#estimate' do
     context 'with hours' do
-      subject { Trello::CardParser.new('(0.5) Hello').get_estimate }
+      subject { Trello::CardParser.new('(0.5) Hello').estimate }
 
       it { is_expected.to eql 0.5 }
     end
 
     context 'with hours and actual' do
-      subject { Trello::CardParser.new('(0.5) Hello [0.3]').get_estimate }
+      subject { Trello::CardParser.new('(0.5) Hello [0.3]').estimate }
 
       it { is_expected.to eql 0.5 }
     end
 
     context 'without hours' do
-      subject { Trello::CardParser.new('Hello').get_estimate }
+      subject { Trello::CardParser.new('Hello').estimate }
 
       it { is_expected.to eql 0.0 }
     end
   end
 
-  context '#get_actual' do
+  context '#actual' do
     context 'with actual' do
-      subject { Trello::CardParser.new('Hello [0.35]').get_actual }
+      subject { Trello::CardParser.new('Hello [0.35]').actual }
 
       it { is_expected.to eql 0.35 }
     end
 
     context 'with actual and estimate' do
-      subject { Trello::CardParser.new('(0.5) Hello [0.35]').get_actual }
+      subject { Trello::CardParser.new('(0.5) Hello [0.35]').actual }
 
       it { is_expected.to eql 0.35 }
     end
 
     context 'without hours' do
-      subject { Trello::CardParser.new('Hello').get_actual }
+      subject { Trello::CardParser.new('Hello').actual }
 
       it { is_expected.to eql 0.0 }
     end
 
     context 'without hours / with estimate' do
-      subject { Trello::CardParser.new('(0.5) Hello').get_actual }
+      subject { Trello::CardParser.new('(0.5) Hello').actual }
 
       it { is_expected.to eql 0.0 }
     end
