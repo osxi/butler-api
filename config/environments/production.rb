@@ -3,7 +3,7 @@ Rails.application.configure do
 
   ActionMailer::Base.delivery_method = :sendmail
   config.action_mailer.default_url_options = {
-    host: "https://poeticsystems.freshbooks.com"
+    host: "https://#{ENV['ROOT_URL']}"
   }
 
   # Code is not reloaded between requests.
