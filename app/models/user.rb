@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   scope :managers, -> { where(manager: true) }
 
+  delegate :name, to: :team, prefix: true
+
   def name
     "#{first_name} #{last_name}"
   end

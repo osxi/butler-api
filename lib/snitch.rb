@@ -38,7 +38,7 @@ class Snitch
   def manager_message(user)
     yesterday  = @dates.yesterday.strftime('%m/%d/%Y')
     "Here's yesterday's report for your team: " \
-    "#{manager_report_url}?date=#{yesterday}&team=#{user.team.name}" \
+    "#{manager_report_url}?date=#{yesterday}&team=#{user.team_name}" \
     "&authorization_token=#{user.authentication_token}"
   end
 
