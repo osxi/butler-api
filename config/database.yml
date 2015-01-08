@@ -1,9 +1,7 @@
 defaults: &defaults
   adapter: postgresql
-  host: localhost
   encoding: unicode
   pool: 5
-  port: 15432
 
 test: &test
   <<: *defaults
@@ -12,6 +10,7 @@ test: &test
 development:
   <<: *defaults
   database: butler-api_development
+  port: 15432
 
 staging:
   <<: *defaults
