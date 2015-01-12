@@ -39,7 +39,7 @@ describe TrelloApi do
       expect(client).to receive(:update_card_hours).and_call_original
       expect(client).to receive(:notify_airbrake)
 
-      res = client.update_card_hours('123456', 0.5)
+      client.update_card_hours('123456', 0.5)
     end
   end
 
