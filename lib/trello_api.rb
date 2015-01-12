@@ -18,6 +18,9 @@ class TrelloApi
     else
       set_card_name(card_id, name_with_updated_hours)
     end
+  rescue Trello::Error => e
+    notify_airbrake e
+    false
   end
 
   def get_card_name(card_id)
@@ -59,5 +62,9 @@ class TrelloApi
 
   def update_hours_in_name(name, total_hours)
     Trello::CardParser.new(name).update_hours_in_name(total_hours)
+  end
+
+  def notify_airbrake(err)
+    Airbrake.notify(err)
   end
 end
