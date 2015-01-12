@@ -34,7 +34,6 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-
 gem "rack-handlers"
 gem "rack-cors", require: "rack/cors"
 gem "unicorn"
@@ -46,6 +45,8 @@ gem "ruby-trello"
 gem "airbrake"
 gem "httparty"
 gem "wannabe_bool"
+gem "devise"
+gem "rails_admin"
 
 group :production, :staging do
   gem "rails_12factor"

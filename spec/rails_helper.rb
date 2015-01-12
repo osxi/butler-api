@@ -64,4 +64,5 @@ RSpec.configure do |config|
 
   # http://matthewlehner.net/rails-api-testing-guidelines/
   config.include Requests::JsonHelpers, type: :request
+  config.include AuthHelpers, type: :controller
 end

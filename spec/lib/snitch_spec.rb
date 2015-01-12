@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Snitch do
   let(:snitch)   { Snitch.new(ENV['SLACK_API_TOKEN'], Date.iso8601('2014-12-17T00:00:00.213Z')) }
-  let!(:team)    { FactoryGirl.create(:team, name: "Snitch Team" ) }
+  let!(:team)    { FactoryGirl.create(:team, name: 'Snitch Team') }
   let!(:user)    { FactoryGirl.create(:user, team: team) }
   let!(:manager) { FactoryGirl.create(:user, manager: true, team: team) }
 

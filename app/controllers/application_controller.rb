@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+  include TokenAuth
+
   protect_from_forgery with: :exception
+
+  before_action :authenticate!
+
+  def unauthorized
+    render layout: false, file: 'public/401.html', status: 401
+  end
 end

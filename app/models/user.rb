@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
   belongs_to :team
   has_many :time_entries
   has_and_belongs_to_many :projects
@@ -8,19 +12,19 @@ class User < ActiveRecord::Base
 
   scope :managers, -> { where(manager: true) }
 
+  delegate :name, to: :team, prefix: true
+
   def name
     "#{first_name} #{last_name}"
   end
 
   def ensure_authentication_token!
-    if authentication_token.blank?
-      self.authentication_token = generate_authentication_token
-    end
+    self.authentication_token = generate_authentication_token if authentication_token.blank?
   end
 
   def hours_in_range(date_range)
-      time_entries.where(date: date_range)
-                  .pluck(&:hours).inject(:+) || 0
+    time_entries.where(date: date_range)
+      .pluck(&:hours).inject(:+) || 0
   end
 
   class << self

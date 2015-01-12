@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :project do
-    name "MyString"
+    name 'Dream App'
   end
-
 end

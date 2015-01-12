@@ -20,7 +20,7 @@ module Trello
 
     def cards_for_board_id(board_id)
       trello_response = client.get "/boards/#{board_id}/cards",
-                                  fields: card_fields
+                                   fields: card_fields
       JSON.parse trello_response
     end
 
@@ -29,11 +29,11 @@ module Trello
     end
 
     def card_fields
-      ['name', 'desc', 'shortLink', 'shortUrl'].join(',')
+      %w(name desc shortLink shortUrl).join(',')
     end
 
     def add_extra_fields(cards, board_id)
-      board_name = get_board_name board_id
+      board_name = board_name board_id
 
       cards.map do |card|
         card = add_time_info card
@@ -48,8 +48,8 @@ module Trello
 
     def add_time_info(card)
       parser = Trello::CardParser.new(card['name'])
-      card['actual']   = parser.get_actual
-      card['estimate'] = parser.get_estimate
+      card['actual']   = parser.actual
+      card['estimate'] = parser.estimate
       card
     end
 
@@ -57,7 +57,7 @@ module Trello
       cards.map { |card| card.except('id') }
     end
 
-    def get_board_name(board_id)
+    def board_name(board_id)
       trello_response = client.get "/boards/#{board_id}/name"
       JSON.parse(trello_response)['_value']
     end

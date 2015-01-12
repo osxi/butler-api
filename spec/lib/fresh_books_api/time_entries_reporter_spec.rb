@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 describe FreshBooksApi::TimeEntriesReporter do
@@ -22,8 +21,8 @@ describe FreshBooksApi::TimeEntriesReporter do
 
     it 'should have correct keys' do
       entries = run_report
-      expect(entries.first.keys).to eq(['hours', 'date', 'notes', 'billed',
-                                        'trello_card_id', 'staff_name'])
+      expect(entries.first.keys).to eq(%w(hours date notes billed
+                                          trello_card_id staff_name))
     end
 
     context 'only_billable = true' do

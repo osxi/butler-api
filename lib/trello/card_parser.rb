@@ -16,12 +16,12 @@ module Trello
       end
     end
 
-    def get_actual
+    def actual
       first_match_or(matches: name.match(ACTUAL_REGEX),
                      default: 0.0).to_f
     end
 
-    def get_estimate
+    def estimate
       first_match_or(matches: name.match(ESTIMATE_REGEX),
                      default: 0.0).to_f
     end

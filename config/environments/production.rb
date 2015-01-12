@@ -1,6 +1,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  ActionMailer::Base.delivery_method = :sendmail
+  config.action_mailer.default_url_options = {
+    host: "https://#{ENV['ROOT_URL']}"
+  }
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

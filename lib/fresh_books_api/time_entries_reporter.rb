@@ -21,10 +21,7 @@ module FreshBooksApi
     end
 
     def filter_entries(entries, only_billable)
-      if only_billable
-        entries = filter_non_billable entries
-      end
-
+      entries = filter_non_billable entries if only_billable
       entries
     end
 
