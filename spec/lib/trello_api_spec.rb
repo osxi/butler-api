@@ -28,6 +28,19 @@ describe TrelloApi do
 
       expect(res).to eql false
     end
+
+    it 'returns false on Trello::Error to notify failure and let process continue' do
+      res = client.update_card_hours('123456', 0.5)
+
+      expect(res).to eql false
+    end
+
+    it 'notifies airbrake on Trello::Error' do
+      expect(client).to receive(:update_card_hours).and_call_original
+      expect(client).to receive(:notify_airbrake)
+
+      res = client.update_card_hours('123456', 0.5)
+    end
   end
 
   context '#create_comment', :vcr do
