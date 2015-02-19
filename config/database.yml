@@ -3,7 +3,6 @@ defaults: &defaults
   host: localhost
   encoding: unicode
   pool: 5
-  port: 15432
 
 test: &test
   <<: *defaults
