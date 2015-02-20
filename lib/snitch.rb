@@ -39,7 +39,7 @@ class Snitch
     yesterday  = @dates.yesterday.strftime('%m/%d/%Y')
     "Here's yesterday's report for your team: " \
     "#{manager_report_url}?date=#{yesterday}&team=#{user.team_name}" \
-    "&authorization_token=#{user.authentication_token}"
+    "&authentication_token=#{user.authentication_token}"
   end
 
   def post_message(slack_id, message)
