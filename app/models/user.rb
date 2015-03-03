@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
       .map(&:hours).inject(:+) || 0
   end
 
+  def name_or_email
+    self.try(:name) || self.try(:email) || "Unknown (fbid: #{self.fb_staff_id})"
+  end
+
   class << self
     def try_name_from_fb_staff_id(id)
       user = User.find_by(fb_staff_id: id)

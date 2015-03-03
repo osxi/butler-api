@@ -2,22 +2,38 @@
 
 <h4><%= date_range_formatter(@date_range) %></h4>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Hours Logged<th>
-  </tr>
-  <% @time_entries.each do |user, time_entries| %>
+<span style="display: inline-table; width: 49%">
+  <table>
     <tr>
-      <td><%= user.name %></td>
+      <th>Name</th>
+      <th>Hours Logged<th>
+    </tr>
+    <% @time_entries.each do |user, time_entries| %>
+    <tr>
+      <td><%= user.try(:name_or_email) || 'Uknown User' %></td>
       <td><%= time_entries.map(&:hours).inject(0, :+).try(:round, 2) %></td>
     </tr>
-  <% end %>
-  <% if @time_entries.blank? %>
+    <% end %>
+    <% if @time_entries.blank? %>
     <tr><td colspan='8'><strong>No records found.</strong></td></tr>
-  <% end %>
-  <tr>
-    <td>Total:</td>
-    <td><%= @total_hours %></td>
-  </tr>
-</table>
+    <% end %>
+    <tr>
+      <td>Total:</td>
+      <td><%= @total_hours %></td>
+    </tr>
+  </table>
+</span>
+<span style="display: inline-table; width: 50%;">
+  <table>
+    <tr>
+      <th>Name</th>
+    </tr>
+    <% @all_users.each do |user| %>
+      <tr>
+        <td>
+	  <%= user.name %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</span>

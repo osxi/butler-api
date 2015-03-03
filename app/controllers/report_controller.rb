@@ -1,8 +1,10 @@
 class ReportController < ApplicationController
   def daily
+    @all_users    = User.all.order(:first_name).reject{|u| u.blank?}
     @team         = Team.includes(:users).find_by(name: params[:team])
     @total_hours  = total_daily_hours
     @time_entries = daily_time_entries.group_by(&:user)
+                    .sort_by{|u, _time_entries| u.try(:first_name).to_s}
   end
 
   def user
