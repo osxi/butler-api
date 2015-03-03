@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   def hours_in_range(date_range)
     time_entries.where(date: date_range)
-      .pluck(&:hours).inject(:+) || 0
+      .map(&:hours).inject(:+) || 0
   end
 
   class << self
