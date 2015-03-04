@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.1.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
@@ -47,6 +47,8 @@ gem "httparty"
 gem "wannabe_bool"
 gem "devise"
 gem "rails_admin"
+
+gem 'materialize_rails'
 
 group :production, :staging do
   gem "rails_12factor"

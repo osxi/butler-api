@@ -1,38 +1,71 @@
+<style>
+  .red { color:red; }
+  /*td:last-child { text-align: right; }*/
+  td,
+  th {
+    padding: 5px 15px;
+    text-align: left;
+  }
+</style>
+
 <h1>Daily Report for <%= @team.try(:name)||'All' %> Team</h1>
 
 <h4><%= date_range_formatter(@date_range) %></h4>
 
-<span style="display: inline-table; width: 49%">
+<%- @listed_users = [] %>
+
+<span style="display: inline-table; width: 400px;">
   <table>
     <tr>
       <th>Name</th>
       <th>Hours Logged<th>
     </tr>
     <% @time_entries.each do |user, time_entries| %>
+    <%- @listed_users << user %>
     <tr>
       <td><%= user.try(:name_or_email) || 'Uknown User' %></td>
-      <td><%= time_entries.map(&:hours).inject(0, :+).try(:round, 2) %></td>
+      <td>
+        <%
+          time = time_entries.map(&:hours).inject(0, :+).try(:round, 2)
+          class_name = 'red' if time < 5.5
+        %>
+        <span class="<%= class_name %>"><%= time %></span>
+      </td>
     </tr>
     <% end %>
     <% if @time_entries.blank? %>
     <tr><td colspan='8'><strong>No records found.</strong></td></tr>
     <% end %>
     <tr>
-      <td>Total:</td>
-      <td><%= @total_hours %></td>
+      <th>Total:</th>
+      <th><%= @total_hours %></th>
     </tr>
   </table>
 </span>
-<span style="display: inline-table; width: 50%;">
+
+<%- @missing_users = @all_users - @listed_users %>
+<span style="display: inline-table; width: 200px;">
+<table>
+  <tr>
+      <th>Didn't Log Time</th>
+    </tr>
+  <% @missing_users.each do |user| %>
+    <tr>
+    <td><%= user.try(:name_or_email) || 'Uknown User' %></td>
+    </tr>
+  <% end %>
+</table>
+</span>
+
+
+<span style="display: inline-table; width: 200px;">
   <table>
     <tr>
       <th>Name</th>
     </tr>
     <% @all_users.each do |user| %>
       <tr>
-        <td>
-	  <%= user.name %>
-        </td>
+	       <td><%= user.try(:name_or_email) || 'Uknown User' %></td>
       </tr>
     <% end %>
   </table>

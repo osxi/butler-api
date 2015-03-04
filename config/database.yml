@@ -1,3 +1,7 @@
+# heroku pgbackups:url -a butler-api
+# pg_restore --verbose --clean --no-acl --no-owner -h localhost -d butler-api_development ~/DOWNLOADS/a118.dump
+
+
 defaults: &defaults
   adapter: postgresql
   host: localhost
