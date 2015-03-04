@@ -48,8 +48,6 @@ gem "wannabe_bool"
 gem "devise"
 gem "rails_admin"
 
-gem 'materialize_rails'
-
 group :production, :staging do
   gem "rails_12factor"
   gem "hirefire-resource"
