@@ -10,7 +10,7 @@ class WebsitesController < ApplicationController
     @website = Website.new(website_params)
     if @website.save
     	@website.ping_url
-    	redirect_to :index, notice: 'Website added'
+    	redirect_to websites_path(authentication_token: params[:authentication_token]), notice: 'Website added'
     else
     	redirect_to :index, alert: @website.errors.full_messages.join('. ')
     end
