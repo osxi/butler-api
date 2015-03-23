@@ -9,7 +9,7 @@ class WebsitesController < ApplicationController
   def create
     @website = Website.new(website_params)
     if @website.save
-    	@website.ping_now
+    	@website.ping_url
     	redirect_to :index, notice: 'Website added'
     else
     	redirect_to :index, alert: @website.errors.full_messages.join('. ')
