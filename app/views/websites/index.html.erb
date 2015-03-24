@@ -12,6 +12,11 @@ th {
 	font-weight: bold;
 	text-align: left;
 }
+
+.red {
+	color: red;
+}
+
 </style>
 
 <h1>Websites</h1>
@@ -19,8 +24,8 @@ th {
 <table>
 	<thead>
 		<tr>
+			<th>Online</th>
 			<th>URL</th>
-			<th>Live</th>
 			<th>Pinged</th>
 			<th></th>
 		</tr>
@@ -28,8 +33,14 @@ th {
 	<tbody>
 	<%- @websites.each do |website| -%>
 		<tr>
+			<td>
+				<%- if website.live? -%>
+					Yes
+				<%- else -%>
+					<span class='red'>Offline</span>
+				<%- end -%>
+			</td>
 			<td><%= website.url %></td>
-			<td><%= website.live %></td>
 			<td><%= pretty_time website.ping %></td>
 			<td>
 				<%= link_to 'Ping', [:ping_now, website] %>
