@@ -19,7 +19,6 @@ th {
 <table>
 	<thead>
 		<tr>
-			<th>Website</th>
 			<th>URL</th>
 			<th>Live</th>
 			<th>Pinged</th>
@@ -29,7 +28,6 @@ th {
 	<tbody>
 	<%- @websites.each do |website| -%>
 		<tr>
-			<td><%= website.name %></td>
 			<td><%= website.url %></td>
 			<td><%= website.live %></td>
 			<td><%= pretty_time website.ping %></td>
@@ -46,9 +44,6 @@ th {
 
 <h2>New Website</h2>
 <%= form_for @website do |f| %> 
-	<label>Name</label>
-	<%= f.text_field :name %>
-
 	<label>URL</label>
 	<%= f.text_field :url %>
 

@@ -1,7 +1,7 @@
 class Website < ActiveRecord::Base
 	require 'net/http'
 
-	validates_presence_of :name, :url
+	validates_presence_of :url
 
 	def ping_url
 		http = Net::HTTP.new(url,80)
