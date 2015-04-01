@@ -10,7 +10,14 @@ module FreshBooksApi
         user.first_name = staff['first_name']
         user.last_name  = staff['last_name']
         user.email      = staff['email']
-        user.save! if user.changed?
+
+        if user.encrypted_password.blank?
+          new_pass  = SecureRandom.urlsafe_base64(nil, false)
+          user.password              = new_pass
+          user.password_confirmation = new_pass
+        end
+
+        user.save! if user.new_record?
       end
     end
   end
