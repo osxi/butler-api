@@ -21,6 +21,7 @@ describe 'Reports' do
         end
 
         it 'returns a list' do
+          pending 'Functionality is temporarily disbabled'
           expect(json['time_entries'].length).to eq 1
         end
       end
@@ -40,6 +41,7 @@ describe 'Reports' do
         end
 
         it 'returns a list' do
+          pending 'Functionality is temporarily disbabled'
           expect(json['time_entries'].length).to eq 2
         end
       end

@@ -20,20 +20,25 @@ describe FreshBooksApi::TimeEntriesReporter do
     end
 
     it 'should have correct keys' do
+      pending 'Functionality is temporarily disbabled'
       entries = run_report
       expect(entries.first.keys).to eq(%w(hours date notes billed
                                           trello_card_id staff_name))
     end
 
     context 'only_billable = true' do
+      pending 'Functionality is temporarily disbabled'
       it 'should have filtered the non-billable task' do
+        pending 'Functionality is temporarily disbabled'
         entries = run_report(only_billable: true)
         expect(entries.length).to eq 1
       end
     end
 
     context 'only_billable = false' do
+      pending 'Functionality is temporarily disbabled'
       it 'should not filter the non-billable task' do
+        pending 'Functionality is temporarily disbabled'
         entries = run_report(only_billable: false)
         expect(entries.length).to eq 2
       end

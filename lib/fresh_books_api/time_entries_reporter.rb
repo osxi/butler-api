@@ -1,11 +1,13 @@
 module FreshBooksApi
   class TimeEntriesReporter < TimeEntries
     def report(project_ids:, from:, to:, only_billable:true)
+
       entries = project_ids.inject([]) do |res, project_id|
-        entries = all(project_id: project_id,
-                      date_from: from.strftime(TIME_FORMAT),
-                      date_to: to.strftime(TIME_FORMAT))
-        res.concat(entries)
+        entries = TimeEntry.where(
+          project: Project.find_by(fb_project_id: project_id),
+          date: from.strftime(TIME_FORMAT)..to.strftime(TIME_FORMAT)
+        )
+        res.concat(entries).as_json
       end
 
       format_entries entries, only_billable
@@ -15,7 +17,8 @@ module FreshBooksApi
 
     def format_entries(entries, only_billable)
       entries = add_non_default_fields entries
-      entries = filter_entries entries, only_billable
+      # The following line is intentionally disabled for now
+      # entries = filter_entries entries, only_billable
       entries = remove_unwanted_fields entries
       entries
     end
@@ -57,7 +60,7 @@ module FreshBooksApi
     end
 
     def add_staff_name(entry)
-      entry['staff_name'] = User.try_name_from_fb_staff_id(entry['staff_id'])
+      entry['staff_name'] = User.find_by(id: entry['user_id']).try(:name) || 'Unknown Staff'
       entry
     end
   end
